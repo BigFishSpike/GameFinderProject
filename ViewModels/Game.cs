@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using static GameFinder.Common.EntityValidation;
+    using static GameFinder.Common.EntityValidation.Game;
 
     public class Game
     {
@@ -13,12 +13,15 @@
         [MaxLength(GameNameMaxLength)]
         public string Name { get; set; } = null!;
 
-        [Required]
-        [MaxLength(Game)]
-        public string Description { get; set; }
+        [MaxLength(GameDescriptionMaxLength)]
+        public string? Description { get; set; }
 
         [ForeignKey(nameof(Genre))]
         public int GenreId { get; set; }
+
+        [Required]
         public virtual Genre Genre { get; set; } = null!;
+
+        
     }
 }
