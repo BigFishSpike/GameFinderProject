@@ -1,4 +1,4 @@
-﻿namespace GameFinder.ViewModels
+﻿namespace GameFinder.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
     using static GameFinder.Common.EntityValidation.Genre;
@@ -13,8 +13,9 @@
         public string Name { get; set; } = null!;
 
         [MaxLength(GenreDescriptionMaxLength)]
-        public string? Description { get; set; } //not sure if we'll keep it nullable, but that's for later
+        public string? Description { get; set; }
 
-
+        public virtual ICollection<Game> Games { get; set; }
+        = new HashSet<Game>();
     }
 }

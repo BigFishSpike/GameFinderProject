@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Configuration\" />
-    <Folder Include="Data\Models\Enums%28TBD%29\" />
+    <Compile Remove="Data\Models\Enums%28TBD%29\**" />
+    <Content Remove="Data\Models\Enums%28TBD%29\**" />
+    <EmbeddedResource Remove="Data\Models\Enums%28TBD%29\**" />
+    <None Remove="Data\Models\Enums%28TBD%29\**" />
   </ItemGroup>
 
   <ItemGroup>
