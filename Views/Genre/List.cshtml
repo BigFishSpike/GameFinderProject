@@ -1,0 +1,16 @@
+﻿@model IEnumerable<GenreListViewModel>
+@{    
+    ViewData["Title"] = "Genres";
+}
+<h1 class ="text-center">Genres</h1>
+<hr />
+<p class ="text-center">Looking for a specific genre? Then look no further!</p>
+
+
+<div class = "flex-container">
+
+@foreach (GenreListViewModel genre in Model)
+{
+    <partial name="_GenresPartial" model="genre"/>
+}
+</div>

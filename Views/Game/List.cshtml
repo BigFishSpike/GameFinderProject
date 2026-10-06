@@ -1,0 +1,15 @@
+﻿@model IEnumerable<GameListViewModel>
+@{    
+    ViewData["Title"] = "List of Games";
+}
+<h1 class ="text-center">Games List</h1>
+<hr />
+
+<p>Welcome to the games page!</p>
+<div class = "flex-container">
+
+@foreach (GameListViewModel game in Model)
+{
+    <partial name="_GamesPartial" model="game"/>
+}
+</div>

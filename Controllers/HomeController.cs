@@ -1,9 +1,8 @@
-using GameFinder.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
 namespace GameFinder.Controllers
 {
+    using GameFinder.ViewModels;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
     public class HomeController : Controller
     {
         public IActionResult Index()

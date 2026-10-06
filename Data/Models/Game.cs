@@ -12,7 +12,7 @@
 
         [Required]
         [MaxLength(GameNameMaxLength)]
-        public string Name { get; set; } = null!; //maybe change to title for consistency?
+        public string Name { get; set; } = null!; 
 
         [MaxLength(GameDescriptionMaxLength)]
         public string? Description { get; set; }
