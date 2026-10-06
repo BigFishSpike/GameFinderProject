@@ -4,7 +4,6 @@ using GameFinder.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameFinder.Data.Migrations
 {
     [DbContext(typeof(GameFinderDbContext))]
-    [Migration("20261005164100_UpdateInitialDbSchemaSeed")]
-    partial class UpdateInitialDbSchemaSeed
+    partial class GameFinderDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,8 +250,8 @@ namespace GameFinder.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -272,26 +269,31 @@ namespace GameFinder.Data.Migrations
                         new
                         {
                             Id = 1,
+                            Description = "Play through a story, complete quests, and grow stronger by earning experience points!",
                             Name = "RPG"
                         },
                         new
                         {
                             Id = 2,
+                            Description = "Experience the thrill of combat through gunplay - be it tactical, or fast-paced, the choice is yours.",
                             Name = "FPS"
                         },
                         new
                         {
                             Id = 3,
+                            Description = "No run is the same - play through randomized level every time, choose a different weapon or skill, and make every run your own.",
                             Name = "Roguelike"
                         },
                         new
                         {
                             Id = 4,
+                            Description = "Think you can survive the harshnes of the world? Then put that to the task in these games that will test your will and your mettle.",
                             Name = "Survival"
                         },
                         new
                         {
                             Id = 5,
+                            Description = "Some people want action, combat, and guts to spill. And others want to clean up after those people, because to see an awful mess cleaned up completely is a reward in itself.",
                             Name = "Cleaning"
                         });
                 });
