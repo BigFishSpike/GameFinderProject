@@ -1,15 +1,10 @@
 ﻿@model GameListViewModel
 
-<a asp-controller ="Game" asp-action = "Details" asp-route-id="@Model.Id" class = "text-decoration-none text-dark">
-
 <div class="card mb-2">
     <div class="card-body">
         <h5 class="card-title mb-1"> @Model.Name</h5>
 
         <img src="@Model.ImageUrl" class ="game-image" alt="@Model.Name" />
-
-        <p> Genre: @Model.GenreName</p>
     
     </div>
 </div>
-</a>

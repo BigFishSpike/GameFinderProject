@@ -1,9 +1,10 @@
 ﻿namespace GameFinder.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using GameFinder.ViewModels.Game;
-    using static Common.ApplicationConstants;
     using GameFinder.Data;
+    using GameFinder.ViewModels.Game;
+    using GameFinder.ViewModels.Genre;
+    using Microsoft.AspNetCore.Mvc;
+    using static Common.ApplicationConstants;
 
     public class GameController : Controller
     {
@@ -35,6 +36,37 @@
                 .ToArray();
 
             return View(gameListViewModels);
+        }
+
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            if (!id.HasValue || id.Value <= 0)
+            {
+                return BadRequest("Incorrect value entered. Please try again.");
+            }
+
+            GameDetailsViewModel? gameDetailsViewModel = dbContext.Games
+                .Where(g => g.Id == id.Value)
+                .Select(g => new GameDetailsViewModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    Description = g.Description,
+                    Difficulty = g.Difficulty,
+                    PlayerOptions = g.PlayerOptions,
+                    GameModes = g.GameModes,
+                    ImageUrl = g.ImageUrl, 
+                    
+                })
+                .SingleOrDefault();
+
+            if (gameDetailsViewModel == null)
+            {
+                return NotFound("Game not found. Please pick a valid game.");
+            }
+
+            return View(gameDetailsViewModel);
         }
 
         [HttpPost]

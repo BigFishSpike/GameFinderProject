@@ -17,9 +17,9 @@
         [MaxLength(GameDescriptionMaxLength)]
         public string? Description { get; set; }
 
-        public virtual Difficulty? Difficulty { get; set; }
-        public virtual PlayerOptions? PlayerOptions { get; set; }
-        public virtual GameModes? GameModes { get; set; }
+        public Difficulty? Difficulty { get; set; }
+        public PlayerOptions? PlayerOptions { get; set; }
+        public GameModes? GameModes { get; set; }
 
         [MaxLength(GameImageUrlMaxLength)]
         public string? ImageUrl { get; set; }

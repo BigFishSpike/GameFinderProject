@@ -1,0 +1,18 @@
+﻿@model GameDetailsViewModel
+
+@{    
+    ViewData["Title"] = Model.Name;
+}
+<h1 class ="text-center">@Model.Name</h1>
+<hr />
+
+<div class = "flex-container">
+
+    <div class = row-justify-content-center"> <div class = "col-md-8""> <img src="@Model.ImageUrl" alt= "@Model.Name" class = "game-image mb-3"/>
+    <p> Description: @Model.Description</p>
+    <p> Difficulty: @Model.Difficulty</p>
+    <p> Gamemodes: @Model.GameModes</p>
+    <p> Player options: @Model.PlayerOptions</p>
+
+    </div>
+</div>
