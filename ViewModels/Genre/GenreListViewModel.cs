@@ -6,7 +6,7 @@
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
 
-        //maybe we'll add more, the above is just the starting point
+        public string? ImageUrl { get; set; }
 
     }
 }

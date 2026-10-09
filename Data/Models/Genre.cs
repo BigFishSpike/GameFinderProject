@@ -15,6 +15,10 @@
         [MaxLength(GenreDescriptionMaxLength)]
         public string? Description { get; set; }
 
+
+        [MaxLength(GenreImageUrlMaxLength)]
+        public string? ImageUrl { get; set; }
+
         public virtual ICollection<Game> Games { get; set; }
         = new HashSet<Game>();
     }

@@ -4,6 +4,7 @@ using GameFinder.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameFinder.Data.Migrations
 {
     [DbContext(typeof(GameFinderDbContext))]
-    partial class GameFinderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261009100322_AddGenreImagesStock")]
+    partial class AddGenreImagesStock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,21 +283,21 @@ namespace GameFinder.Data.Migrations
                         new
                         {
                             Id = 2,
-                            Description = "Experience the thrill of combat through gunplay - be it tactical or fast-paced, the choice is yours.",
+                            Description = "Experience the thrill of combat through gunplay - be it tactical, or fast-paced, the choice is yours.",
                             ImageUrl = "https://st2.depositphotos.com/1327793/6774/i/950/depositphotos_67749521-stock-photo-a-gunfight-at-old-tucson.jpg",
                             Name = "FPS"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "No run is the same - play through a randomized level every time, choose a different weapon or skill, and make every run your own.",
+                            Description = "No run is the same - play through randomized level every time, choose a different weapon or skill, and make every run your own.",
                             ImageUrl = "https://t4.ftcdn.net/jpg/02/64/24/07/360_F_264240749_rZiS4JvhKf0lC0Nj9eBgFBn8r8FcEdFw.jpg",
                             Name = "Roguelike"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Think you can survive the harshness of the world? Then put that to the task in these games that will test your will as well as your mettle.",
+                            Description = "Think you can survive the harshnes of the world? Then put that to the task in these games that will test your will and your mettle.",
                             ImageUrl = "https://i.imgur.com/gJbYe0s.jpeg",
                             Name = "Survival"
                         },

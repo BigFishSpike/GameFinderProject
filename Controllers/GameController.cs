@@ -3,7 +3,6 @@
     using Microsoft.AspNetCore.Mvc;
     using GameFinder.ViewModels.Game;
     using static Common.ApplicationConstants;
-    using GameFinder.Data.Models;
     using GameFinder.Data;
 
     public class GameController : Controller

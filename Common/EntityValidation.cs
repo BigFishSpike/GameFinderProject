@@ -27,6 +27,8 @@
             public const int GenreNameMaxLength = 64;
 
             public const int GenreDescriptionMaxLength = 350;
+
+            public const int GenreImageUrlMaxLength = 2083;
         }
 
     }

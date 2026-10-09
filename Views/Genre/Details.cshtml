@@ -1,0 +1,19 @@
+﻿@model GenreDetailsViewModel
+
+@{    
+    ViewData["Title"] = @Model.Name;
+}
+<h1 class ="text-center">@Model.Name</h1>
+<hr />
+<p class ="text-center">@Model.Description</p>
+
+
+<div class = "flex-container">
+
+
+@foreach (GameListViewModel game in Model.Games)
+{
+       <partial name="_GamesPartial" model="game"/>
+}
+
+</div>

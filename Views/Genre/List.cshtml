@@ -4,13 +4,15 @@
 }
 <h1 class ="text-center">Genres</h1>
 <hr />
-<p class ="text-center">Looking for a specific genre? Then look no further!</p>
+<p class ="text-center">Want a specific genre? You're in the right place!</p>
 
 
 <div class = "flex-container">
+
 
 @foreach (GenreListViewModel genre in Model)
 {
     <partial name="_GenresPartial" model="genre"/>
 }
+
 </div>

@@ -1,12 +1,13 @@
 ﻿@model GenreListViewModel
 
-<div class="card mb-2">
-    <div class="card-body">
-        <h5 class="card-title mb-1"> @Model.Name</h5>
+<a asp-controller="Genre" asp-action="Details" asp-route-id="@Model.Id" class="text-decoration-none text-dark">
 
-       @* <img src="@Model.ImageUrl" alt="@Model.Name" />  
-           thinking of adding a clickable button with an image here for every genre like "SURVIVAL", "RPG" etc that will redirect to a page with every survival game, etc
-       *@
-    
+
+<div class="card mb-2">
+    <img src="@Model.ImageUrl" class="genre-image" alt="@Model.Name" />
+    <div class="card-body">
+        <h5 class="card-title mb-1"> @Model.Name</h5>  
     </div>
 </div>
+
+</a>
