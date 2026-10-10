@@ -6,6 +6,10 @@
     using Microsoft.AspNetCore.Mvc;
     using static Common.ApplicationConstants;
 
+
+    //Still need to add proper layout to Details page - very messy atm
+
+
     public class GameController : Controller
     {
         private readonly GameFinderDbContext dbContext;

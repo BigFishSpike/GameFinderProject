@@ -75,5 +75,6 @@
 
             return View(genreDetailsViewModel);
         }
+       
     }
 }
