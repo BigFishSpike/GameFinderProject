@@ -1,0 +1,34 @@
+﻿@model GameSearchViewModel
+
+@{
+    ViewData["Title"] = "Uno, dos, tres!";
+}
+
+<h1 class="text-center">Prefer solo, with a friend, or lots of people?</h1>
+<p class="text-center"> Your choices so far: </p>
+<p class="text-center"> Genre - <strong>@(Model.Genre ?? SearchDefaults.DefaultGenre)</strong> </p>
+<p class="text-center"> Gamemode type - <strong>@(Model.GameModes?.ToString() ?? SearchDefaults.DefaultGameMode)</strong> </p>
+
+<div class="container mt-4">
+
+    <form asp-controller="Game" asp-action="ChooseDifficulty" method="get">
+        <input type="hidden" asp-for="Genre" />
+        <input type="hidden" asp-for="GameModes" />
+
+        <div class="mb-3">
+
+            <label asp-for="PlayerOptions" class="form-label"> Are you looking for PvE, PvP, or both? </label>
+
+            <select asp-for="PlayerOptions" asp-items="Html.GetEnumSelectList<PlayerOptions>()" class="form-select">
+
+                <option value="">I'm good with anything</option>
+
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Forward! </button>
+
+        <a asp-controller="Game" asp-action="ChooseMode" asp-route-Genre="@Model.Genre" asp-route-GameModes="@Model.GameModes" class="btn btn-secondary"> Back to Gamemodes </a>
+
+    </form>
+</div>

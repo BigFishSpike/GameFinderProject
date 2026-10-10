@@ -62,6 +62,7 @@
                         Id = ga.Id,
                         Name = ga.Name,
                         ImageUrl = ga.ImageUrl,
+                        ShowGenre = false
                     })
                     .ToList()
                 })

@@ -1,0 +1,33 @@
+﻿@model GameSearchViewModel
+
+@{
+    ViewData["Title"] = "Fight people or the game?";
+}
+
+<h1 class="text-center">To PvP or not to PvP?</h1>
+<p class="text-center"> Your choices so far: </p>
+<p class="text-center"> Genre - <strong>@(Model.Genre ?? SearchDefaults.DefaultGenre)</strong> </p>
+
+<div class="container mt-4">
+
+    <form asp-controller="Game" asp-action="ChoosePlayers" method="get">
+
+        <input type="hidden" asp-for="Genre" />
+
+        <div class="mb-3">
+
+            <label asp-for="GameModes" class="form-label"> Are you looking for PvE, PvP, or both? </label>
+
+            <select asp-for="GameModes" asp-items="Html.GetEnumSelectList<GameModes>()" class="form-select">
+
+                <option value="">No preference</option>
+
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Next! </button>
+
+        <a asp-controller="Game" asp-action="ChooseGenre" class="btn btn-secondary"> Back to Genre </a>
+
+    </form>
+</div>

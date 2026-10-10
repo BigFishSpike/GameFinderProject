@@ -1,0 +1,39 @@
+﻿@model GameSearchViewModel
+
+@{
+    ViewData["Title"] = "Final tally";
+}
+
+<h1 class="text-center"> The results are in!</h1>
+<p class="text-center"> With your below choices.. </p>
+<p class="text-center"> Genre - <strong>@(Model.Genre ?? SearchDefaults.DefaultGenre)</strong> </p>
+<p class="text-center"> Gamemode type - <strong>@(Model.GameModes?.ToString() ?? SearchDefaults.DefaultGameMode)</strong> </p>
+<p class="text-center"> Player count - <strong>@(Model.PlayerOptions?.ToString() ?? SearchDefaults.DefaultPlayerOption)</strong> </p>
+<p class="text-center"> Difficulty - <strong>@(Model.Difficulty?.ToString() ?? SearchDefaults.DefaultDifficulty)</strong> </p>
+
+@if (Model.Games.Any())
+{
+    <p class="text-center"> ..we think you'll like these!</p>
+
+    <div class="flex-container">
+        @foreach (var game in Model.Games)
+        {
+            <partial name="_GamesPartial" model="game" />
+        }
+    </div>
+}
+
+else
+{
+    <div class="text-center mt-5">
+        <h3>We failed to find your perfect game!</h3>
+        <p>Want to go back and try some other choices?</p>
+    </div>
+}
+
+<div class="text-center mt-4">
+
+    <a asp-controller="Game" asp-action="ChooseGenre" class="btn btn-primary"> Go again! </a>
+    <a asp-controller="Game" asp-action="Search" class="btn btn-secondary"> Try a Quick Search instead </a>
+
+</div>

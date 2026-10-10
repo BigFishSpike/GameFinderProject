@@ -8,7 +8,11 @@
 
         <img src="@Model.ImageUrl" class ="game-image" alt="@Model.Name" />
 
-        <p> Genre: @Model.GenreName</p>
+        @if(Model.ShowGenre)
+        {
+            <p> Genre: @Model.GenreName</p>
+        }
+                   
     
     </div>
 </div>

@@ -1,0 +1,90 @@
+﻿@model GameSearchViewModel
+
+@{
+    ViewData["Title"] = "Find Your Game";
+}
+
+<h1 class="text-center">Find Your Next Game</h1>
+<p class="text-center">
+    Let's find your next game!
+</p>
+
+<hr />
+
+<div class="container">
+    <form asp-controller="Game" asp-action="Search" method="get">
+
+        <div class="mb-3">
+            <label asp-for="Genre" class="form-label">Genre
+
+            </label>
+
+            <select asp-for="Genre" class="form-select">
+
+                <option value="">Any genre
+
+                </option>
+
+                   @foreach (Genre genre in (IEnumerable<Genre>)ViewData["Genres"]!) 
+
+                    { <option value="@genre.Name">@genre.Name </option> }
+
+                    </select>
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Difficulty" class="form-label">Difficulty</label>
+
+            <select asp-for="Difficulty" asp-items="Html.GetEnumSelectList<Difficulty>()" class="form-select">
+
+                <option value="">Any difficulty</option>
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="PlayerOptions" class="form-label">Players</label>
+
+            <select asp-for="PlayerOptions" asp-items="Html.GetEnumSelectList<PlayerOptions>()" class="form-select">
+
+                <option value="">Any player option</option>
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="GameModes" class="form-label">Game Mode</label>
+
+            <select asp-for="GameModes" asp-items="Html.GetEnumSelectList<GameModes>()" class="form-select">
+
+                <option value="">Any game mode</option> 
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Search Games </button>
+
+        <a asp-controller="Game" asp-action="Search" class="btn btn-secondary"> Clear Filters </a>
+
+    </form>
+
+</div>
+
+<hr />
+
+<h2 class="text-center">Search Results</h2>
+
+@if (Model.Games.Count == 0)
+{
+    <p class="text-center"> Sorry, we couldn't find your next game - please try some of our other options! </p>
+}
+else
+{
+    <div class="flex-container">
+        @foreach (GameListViewModel game in Model.Games)
+        {
+            <partial name="_GamesPartial" model="game" />
+        }
+    </div>
+}

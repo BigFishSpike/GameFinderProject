@@ -1,0 +1,36 @@
+﻿@model GameSearchViewModel
+
+@{
+    ViewData["Title"] = "Go hard or go home!";
+}
+
+<h1 class="text-center"> Chill out or go all out?</h1>
+<p class="text-center"> Your choices so far: </p>
+<p class="text-center"> Genre - <strong>@(Model.Genre ?? SearchDefaults.DefaultGenre)</strong> </p>
+<p class="text-center"> Gamemode type - <strong>@(Model.GameModes?.ToString() ?? SearchDefaults.DefaultGameMode)</strong> </p>
+<p class="text-center"> Player count - <strong>@(Model.PlayerOptions?.ToString() ?? SearchDefaults.DefaultPlayerOption)</strong> </p>
+
+<div class="container mt-4">
+
+    <form asp-controller="Game" asp-action="ChooseResult" method="get">
+        <input type="hidden" asp-for="Genre" />
+        <input type="hidden" asp-for="GameModes" />
+        <input type="hidden" asp-for="PlayerOptions" />
+
+        <div class="mb-3">
+
+            <label asp-for="Difficulty" class="form-label"> How much pain do you want? </label>
+
+            <select asp-for="Difficulty" asp-items="Html.GetEnumSelectList<Difficulty>()" class="form-select">
+
+                <option value="">I can handle anything</option>
+
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Show me results! </button>
+
+        <a asp-controller="Game" asp-action="ChoosePlayers" asp-route-Genre="@Model.Genre" asp-route-GameModes="@Model.GameModes" asp-route-PlayerOptions="@Model.PlayerOptions" class="btn btn-secondary"> Back to Player options </a>
+
+    </form>
+</div>

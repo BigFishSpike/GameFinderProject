@@ -1,8 +1,11 @@
-﻿namespace GameFinder.Data.Models.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GameFinder.Data.Models.Enums
 {
     public enum Difficulty
     {
-        Customisable,
+        [Display(Name = "More than one available/customizable difficulty")]
+        Customizable,
         Casual,
         Easy,
         Medium,

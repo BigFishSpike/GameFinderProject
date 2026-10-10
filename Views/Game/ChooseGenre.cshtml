@@ -1,0 +1,31 @@
+﻿@model GameSearchViewModel
+@{
+    ViewData["Title"] = "Find your next game";   
+}
+
+<h1 class="text-center">Let's find your next game!</h1>
+
+<div class="container mt-4"> 
+    <form asp-controller="Game" asp-action="ChooseMode" method="get">
+
+        <div class="mb-3">
+
+            <label for="Genre" class="form-label"> Start with your genre of choice </label>
+
+            <select asp-for="Genre" class="form-select">
+
+                <option value="">No genre preference</option>
+
+                @foreach (Genre genre in
+                    (IEnumerable<Genre>)ViewData["Genres"]!)
+                {
+                    <option value="@genre.Name">
+                        @genre.Name
+                    </option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Onward! </button>
+    </form>
+</div>
