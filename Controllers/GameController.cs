@@ -1,130 +1,122 @@
 ﻿namespace GameFinder.Controllers
 {
-    using GameFinder.Data;
-    using GameFinder.Data.Models;
+    using GameFinder.Services.DTOs;
+    using GameFinder.Services.Interfaces;
     using GameFinder.ViewModels.Game;
     using GameFinder.ViewModels.Genre;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Identity.Client.NativeInterop;
     using static Common.ApplicationConstants;
-
 
     //Still need to add proper layout to Details page - very messy atm
 
-
     public class GameController : Controller
     {
-        private readonly GameFinderDbContext dbContext;
-
-        private readonly ILogger<GameController> logger;
-
-        public GameController(ILogger<GameController> logger, GameFinderDbContext dbContext)
+        private readonly IGameService gameService;
+        private readonly IGenreService genreService;
+        public GameController(IGameService gameService, IGenreService genreService)
         {
-            this.dbContext = dbContext;
-            this.logger = logger;
+            this.gameService = gameService;
+            this.genreService = genreService;
         }
 
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            IEnumerable<GameListViewModel> gameListViewModels = dbContext.Games
-                .OrderBy(g => g.GenreId)
-                .ThenBy(g => g.Name)
+            IEnumerable<GameDto> games = await gameService
+                .GetGamesList(EntitiesPerPage);
+
+            IEnumerable<GameListViewModel> gameListViewModels = games
                 .Select(g => new GameListViewModel()
                 {
                     Id = g.Id,
                     Name = g.Name,
                     ImageUrl = g.ImageUrl,
-                    GenreName = g.Genre.Name,
+                    GenreName = g.GenreName,
                 })
-                .Take(EntitiesPerPage)
-                .ToArray();
+                .ToList();
 
             return View(gameListViewModels);
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (!id.HasValue || id.Value <= 0)
             {
                 return BadRequest("Incorrect value entered. Please try again.");
             }
 
-            GameDetailsViewModel? gameDetailsViewModel = dbContext.Games
-                .Where(g => g.Id == id.Value)
-                .Select(g => new GameDetailsViewModel()
-                {
-                    Id = g.Id,
-                    Name = g.Name,
-                    Description = g.Description,
-                    Difficulty = g.Difficulty,
-                    PlayerOptions = g.PlayerOptions,
-                    GameModes = g.GameModes,
-                    ImageUrl = g.ImageUrl,                 
-                    
-                })
-                .SingleOrDefault();
+            GameDetailsDto? gameDetailsDto = await gameService
+                .GetGameDetails(id.Value);
 
-            if (gameDetailsViewModel == null)
+            if (gameDetailsDto == null)
             {
                 return NotFound("Game not found. Please pick a valid game.");
             }
+
+            GameDetailsViewModel gameDetailsViewModel = new GameDetailsViewModel()
+            {
+                Id = gameDetailsDto.Id,
+                Name = gameDetailsDto.Name,
+                Description = gameDetailsDto.Description,
+                Difficulty = gameDetailsDto.Difficulty,
+                PlayerOptions = gameDetailsDto.PlayerOptions,
+                GameModes = gameDetailsDto.GameModes,
+                ImageUrl = gameDetailsDto.ImageUrl,
+                ReleaseDate = gameDetailsDto.ReleaseDate,
+            };
+
 
             return View(gameDetailsViewModel);
         }
 
         [HttpGet]
-        public IActionResult Search(GameSearchViewModel resultGame)
+        public async Task<IActionResult> Search(GameSearchViewModel gameModel)
         {
-            IQueryable<Game> searchGame = dbContext.Games;
-            
-            ViewData["Genres"] = dbContext.Genres
-                .OrderBy(g => g.Name)
-                .ToList();
-
-            if (!string.IsNullOrWhiteSpace(resultGame.Genre))
+            FindGameDto userRequests = new FindGameDto
             {
-                searchGame = searchGame
-                    .Where(g => g.Genre.Name == resultGame.Genre);
-            }
+                Genre = gameModel.Genre,
+                GameModes = gameModel.GameModes,
+                PlayerOptions = gameModel.PlayerOptions,
+                Difficulty = gameModel.Difficulty,
+            };
 
-            if (resultGame.Difficulty.HasValue)
-            {
-                searchGame = searchGame
-                    .Where(g => g.Difficulty == resultGame.Difficulty);
-            }
+            IEnumerable<GameDto> gameDtos = await gameService
+                .FindGames(userRequests);
 
-            if (resultGame.PlayerOptions.HasValue)
-            {
-                searchGame = searchGame
-                    .Where(g => g.PlayerOptions == resultGame.PlayerOptions);
-            }
-
-            if (resultGame.GameModes.HasValue)
-            {
-                searchGame = searchGame
-                    .Where(g => g.GameModes == resultGame.GameModes);
-            }
-
-            resultGame.Games = searchGame
-                .Select(g => new GameListViewModel
+            gameModel.Games = gameDtos
+                .Select(g => new GameListViewModel()
                 {
                     Id = g.Id,
                     Name = g.Name,
                     ImageUrl = g.ImageUrl,
-                    ShowGenre = false
                 })
                 .ToList();
-           
-            return View(resultGame);
-        }
 
+            IEnumerable<GenreDto> genreDtos = await genreService
+                .GetGenresList();
+
+            gameModel.Genres = genreDtos
+                .Select(g => new GenreListViewModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    ImageUrl = g.ImageUrl,
+                })
+                .ToList();
+
+
+            return View(gameModel);
+        }
+        /*
+         
+      - needs to be reworked completely - will remove all the various Choose views as well; implementation is way too clunky, will use boxes instead of a filter like the quick one
+         
         [HttpGet]
         public IActionResult ChooseGenre()
         {
-            ViewData["Genres"] = dbContext.Genres
-                .OrderBy(g => g.Name)
-                .ToList();
+            IEnumerable<GenreDto> genreDtos = genreService.GetGenresList();
 
             return View(new GameSearchViewModel());
 
@@ -152,7 +144,8 @@
             return View(gameModel);
 
         }
-
+        
+         
         [HttpGet]
         public IActionResult ChooseResult(GameSearchViewModel gameResults)
         {
@@ -195,6 +188,7 @@
 
             return View(gameResults);
         } 
+           */
 
         [HttpPost]
         public IActionResult Create()

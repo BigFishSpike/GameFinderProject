@@ -7,19 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Models\Enums%28TBD%29\**" />
-    <Content Remove="Data\Models\Enums%28TBD%29\**" />
-    <EmbeddedResource Remove="Data\Models\Enums%28TBD%29\**" />
-    <None Remove="Data\Models\Enums%28TBD%29\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.12">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameFinder.Services\GameFinder.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using GameFinder.Data.Models.Enums;
+using GameFinder.ViewModels.Genre;
 
 namespace GameFinder.ViewModels.Game
 {
@@ -11,7 +12,10 @@ namespace GameFinder.ViewModels.Game
         public GameModes? GameModes { get; set; }
 
         public Difficulty? Difficulty { get; set; }
-        public List<GameListViewModel> Games { get; set; }
-           = new List<GameListViewModel>();
+        public List<GameListViewModel> Games { get; set; } 
+            = new List<GameListViewModel>();
+
+        public List<GenreListViewModel> Genres { get; set; } 
+            = new List<GenreListViewModel>();
     }
 }

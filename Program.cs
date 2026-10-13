@@ -1,8 +1,12 @@
-using GameFinder.Data;
-using Microsoft.EntityFrameworkCore;
-
 namespace GameFinder
 {
+    using GameFinder.Data;
+    using GameFinder.Services;
+    using GameFinder.Services.Interfaces;
+    using Microsoft.EntityFrameworkCore;
+    using GameFinder.Services;
+    using GameFinder.Services.Interfaces;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -12,12 +16,14 @@ namespace GameFinder
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
              ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            builder.Services.AddControllersWithViews();
-
             builder.Services.AddDbContext<GameFinderDbContext>(opt =>
             {
                 opt.UseSqlServer(connectionString);
             });
+
+            builder.Services.AddScoped<IGameService, GameService>();
+
+            builder.Services.AddScoped<IGenreService, GenreService>();
 
             builder.Services.AddControllersWithViews();
 

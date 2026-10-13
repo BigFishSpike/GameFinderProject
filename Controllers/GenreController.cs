@@ -1,81 +1,76 @@
 ﻿namespace GameFinder.Controllers
 {
-    using GameFinder.Data;
-    using GameFinder.ViewModels.Genre;
+    using GameFinder.Services.DTOs;
+    using GameFinder.Services.Interfaces;
     using GameFinder.ViewModels.Game;
+    using GameFinder.ViewModels.Genre;
     using Microsoft.AspNetCore.Mvc;
-    using static Common.ApplicationConstants;
 
     public class GenreController : Controller
     {
-        private readonly GameFinderDbContext dbContext;
+        private readonly IGenreService genreService;
 
-        private readonly ILogger<GenreController> logger;
-
-        public GenreController(ILogger<GenreController> logger, GameFinderDbContext dbContext)
+        public GenreController(IGenreService genreService)
         {
-            this.dbContext = dbContext;
-            this.logger = logger;
+            this.genreService = genreService;
         }
 
         [HttpGet]
-        public IActionResult List()
+        public async Task <IActionResult> List()
         {
-            IEnumerable<GenreListViewModel> genreListViewModels = dbContext.Genres
-                .OrderBy(g => g.Id)
-                .ThenBy(g => g.Name)
+            IEnumerable<GenreDto> genres = await genreService
+                .GetGenresList();
+
+            IEnumerable<GenreListViewModel> genreListViewModels = genres
                 .Select(g => new GenreListViewModel()
                 {
                     Id = g.Id,
                     Name = g.Name,
                     ImageUrl = g.ImageUrl,
-                })
-                .Take(EntitiesPerPage)
-                .ToArray();
+                });
 
             return View(genreListViewModels);
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task <IActionResult> Details(int? id)
         {
             if (!id.HasValue || id.Value <= 0)
             {
                 return BadRequest("Incorrect value entered. Please try again.");
             }
+            
+            GenreDetailsDto? genreDetailsDto = await genreService
+                .GetGenreDetails(id.Value);           
 
-            GenreDetailsViewModel? genreDetailsViewModel = dbContext.Genres
-                .Where(g => g.Id == id.Value)
-                .Select(g => new GenreDetailsViewModel()
-                {
-                    Id = g.Id,
-                    Name = g.Name,
-                    Description = g.Description,
-                    ImageUrl = g.ImageUrl,
-
-                    Games = dbContext.Games
-                    .OrderBy(ga => ga.Difficulty)
-                    .ThenBy(ga => ga.Name)
-                    .Where(ga => ga.GenreId == g.Id)
-                    .Select(ga => new GameListViewModel
-                    {
-                        Id = ga.Id,
-                        Name = ga.Name,
-                        ImageUrl = ga.ImageUrl,
-                        ShowGenre = false
-                    })
-                    .ToList()
-                })
-                .SingleOrDefault();            
-
-            if (genreDetailsViewModel == null)
+            if (genreDetailsDto == null)
             {
                 return NotFound("Genre not found. Please pick a different genre.");
 
             }
 
+            GenreDetailsViewModel? genreDetailsViewModel = new GenreDetailsViewModel
+            {
+                Id = genreDetailsDto.Id,
+                Name = genreDetailsDto.Name,
+                Description = genreDetailsDto.Description,
+                ImageUrl = genreDetailsDto.ImageUrl,
+
+
+                Games = genreDetailsDto.Games
+                .Select(gm => new GameListViewModel
+                {
+                    Id = gm.Id,
+                    Name = gm.Name,
+                    ImageUrl = gm.ImageUrl,
+                    ShowGenre = false,
+                })
+                .ToList()
+            };
+
             return View(genreDetailsViewModel);
         }
+
        
     }
 }

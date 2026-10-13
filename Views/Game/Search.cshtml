@@ -25,10 +25,10 @@
 
                 </option>
 
-                   @foreach (Genre genre in (IEnumerable<Genre>)ViewData["Genres"]!) 
-
-                    { <option value="@genre.Name">@genre.Name </option> }
-
+                 @foreach (GenreListViewModel genre in Model.Genres)
+                 {
+                     <option value="@genre.Name">@genre.Name</option>
+                 }
                     </select>
         </div>
 
