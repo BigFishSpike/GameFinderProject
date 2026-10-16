@@ -10,7 +10,7 @@ namespace GameFinder.ViewModels.Game
 
         public string? Description { get; set; }
 
-        public Difficulty? Difficulty { get; set; }
+        public List<Difficulty> Difficulties { get; set; } = new List<Difficulty>();
 
         public PlayerOptions? PlayerOptions { get; set; }
 

@@ -4,13 +4,13 @@
     using GameFinder.Services.Interfaces;
     using GameFinder.ViewModels.Game;
     using GameFinder.ViewModels.Genre;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Identity.Client.NativeInterop;
-    using static Common.ApplicationConstants;
+    using static GameFinder.Common.EntityValidation.ApplicationConstants;
 
     //Still need to add proper layout to Details page - very messy atm
 
-    public class GameController : Controller
+    public class GameController : BaseController
     {
         private readonly IGameService gameService;
         private readonly IGenreService genreService;
@@ -20,7 +20,9 @@
             this.genreService = genreService;
         }
 
+
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> List()
         {
             IEnumerable<GameDto> games = await gameService
@@ -60,7 +62,7 @@
                 Id = gameDetailsDto.Id,
                 Name = gameDetailsDto.Name,
                 Description = gameDetailsDto.Description,
-                Difficulty = gameDetailsDto.Difficulty,
+                Difficulties = gameDetailsDto.Difficulties,
                 PlayerOptions = gameDetailsDto.PlayerOptions,
                 GameModes = gameDetailsDto.GameModes,
                 ImageUrl = gameDetailsDto.ImageUrl,

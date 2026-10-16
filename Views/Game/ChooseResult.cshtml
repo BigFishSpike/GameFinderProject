@@ -6,10 +6,10 @@
 
 <h1 class="text-center"> The results are in!</h1>
 <p class="text-center"> With your below choices.. </p>
-<p class="text-center"> Genre - <strong>@(Model.Genre ?? SearchDefaults.DefaultGenre)</strong> </p>
-<p class="text-center"> Gamemode type - <strong>@(Model.GameModes?.ToString() ?? SearchDefaults.DefaultGameMode)</strong> </p>
-<p class="text-center"> Player count - <strong>@(Model.PlayerOptions?.ToString() ?? SearchDefaults.DefaultPlayerOption)</strong> </p>
-<p class="text-center"> Difficulty - <strong>@(Model.Difficulty?.ToString() ?? SearchDefaults.DefaultDifficulty)</strong> </p>
+<p class="text-center"> Genre - <strong>@(Model.Genre ?? DefaultGenre)</strong> </p>
+<p class="text-center"> Gamemode type - <strong>@(Model.GameModes?.ToString() ?? DefaultGameMode)</strong> </p>
+<p class="text-center"> Player count - <strong>@(Model.PlayerOptions?.ToString() ?? DefaultPlayerOption)</strong> </p>
+<p class="text-center"> Difficulty - <strong>@(Model.Difficulty?.ToString() ?? DefaultDifficulty)</strong> </p>
 
 @if (Model.Games.Any())
 {

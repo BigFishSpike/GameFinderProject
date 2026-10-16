@@ -1,5 +1,12 @@
 <Solution>
-  <Project Path="../GameFinder.Data/GameFinder.Data.csproj" Id="2545132b-b2fe-4a71-abf2-6b894721a410" />
-  <Project Path="../GameFinder.Services/GameFinder.Services.csproj" Id="1329f562-e204-4902-aa62-453743eb2d73" />
-  <Project Path="GameFinder.csproj" />
+  <Folder Name="/Data/">
+    <Project Path="../GameFinder.Data/GameFinder.Data.csproj" Id="2545132b-b2fe-4a71-abf2-6b894721a410" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="../GameFinder.Services/GameFinder.Services.csproj" Id="1329f562-e204-4902-aa62-453743eb2d73" />
+  </Folder>
+  <Folder Name="/Web/">
+    <Project Path="GameFinder.csproj" />
+  </Folder>
+  <Project Path="../IdentityNotes.Common/GameFinder.Common.csproj" Id="fc054817-b707-4dfd-8913-fe2139cb3ff1" />
 </Solution>
