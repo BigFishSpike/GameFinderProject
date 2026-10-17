@@ -23,13 +23,14 @@ namespace GameFinder
             });
 
             builder.Services.AddScoped<IGameService, GameService>();
-
             builder.Services.AddScoped<IGenreService, GenreService>();
+            builder.Services.AddScoped<IUserFavouriteService, UserFavouriteService>();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(opt =>
             {
                 ConfigureIdentityOptions(opt, builder.Configuration);
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<GameFinderDbContext>();
 
             builder.Services.AddControllersWithViews();
