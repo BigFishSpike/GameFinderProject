@@ -6,6 +6,7 @@
     using GameFinder.ViewModels.Genre;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using static GameFinder.Common.EntityValidation;
     using static GameFinder.Common.EntityValidation.ApplicationConstants;
 
     //Still need to add proper layout to Details page - very messy atm
@@ -14,10 +15,13 @@
     {
         private readonly IGameService gameService;
         private readonly IGenreService genreService;
-        public GameController(IGameService gameService, IGenreService genreService)
+        private readonly IGameSearchValidator gameSearchValidator;
+
+        public GameController(IGameService gameService, IGenreService genreService, IGameSearchValidator gameSearchValidator)
         {
             this.gameService = gameService;
             this.genreService = genreService;
+            this.gameSearchValidator = gameSearchValidator;
         }
 
 
@@ -42,7 +46,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details([FromRoute]int? id)
         {
             if (!id.HasValue || id.Value <= 0)
             {
@@ -74,8 +78,12 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search(GameSearchViewModel gameModel)
+        public async Task<IActionResult> Search([FromQuery]GameSearchViewModel gameModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid search parameters. Please try again.");
+            }
             FindGameDto userRequests = new FindGameDto
             {
                 Genre = gameModel.Genre,
@@ -83,6 +91,13 @@
                 PlayerOptions = gameModel.PlayerOptions,
                 Difficulty = gameModel.Difficulty,
             };
+
+            List<string> errors = await gameSearchValidator.ValidateAsync(userRequests);
+
+            if (errors.Count > 0)
+            {
+                return BadRequest(errors);
+            }
 
             IEnumerable<GameDto> gameDtos = await gameService
                 .FindGames(userRequests);

@@ -33,7 +33,7 @@
         }
 
         [HttpGet]
-        public async Task <IActionResult> Details(int? id)
+        public async Task <IActionResult> Details([FromRoute]int? id)
         {
             if (!id.HasValue || id.Value <= 0)
             {
