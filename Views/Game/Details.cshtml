@@ -19,8 +19,32 @@
                     <span>Unspecified</span>
                 }
             </p>
-        <p> Gamemodes: @Model.GameModes</p>
-        <p> Player options: @Model.PlayerOptions</p>
+        <p> 
+            Gamemodes: @Model.Modes
+
+            @if (Model.Modes.Count > 0)
+                {
+                    @string.Join(", ", Model.Modes)
+                }
+                else
+                {
+                    <span>Unspecified</span>
+                }
+            
+        </p>
+        <p> 
+            Player options: @Model.PlayerOptions
+
+            @if (Model.PlayerOptions.Count > 0)
+                {
+                    @string.Join(", ", Model.PlayerOptions)
+                }
+                else
+                {
+                    <span>Unspecified</span>
+                }
+
+            </p>
         <p> Release date: @Model.ReleaseDate.ToString(ApplicationDateFormat)</p>
 
     </div>

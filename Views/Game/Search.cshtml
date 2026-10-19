@@ -12,7 +12,7 @@
 <hr />
 
 <div class="container">
-    <form asp-controller="Game" asp-action="Search" method="get">
+    <form asp-controller="Game" asp-action="Search" method="post">
 
         <div class="mb-3">
             <label asp-for="Genre" class="form-label">Genre
@@ -45,9 +45,9 @@
 
         <div class="mb-3">
 
-            <label asp-for="PlayerOptions" class="form-label">Players</label>
+            <label asp-for="PlayerOption" class="form-label">Players</label>
 
-            <select asp-for="PlayerOptions" asp-items="Html.GetEnumSelectList<PlayerOptions>()" class="form-select">
+            <select asp-for="PlayerOption" asp-items="Html.GetEnumSelectList<PlayerOption>()" class="form-select">
 
                 <option value="">Any player option</option>
 
@@ -55,9 +55,9 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="GameModes" class="form-label">Game Mode</label>
+            <label asp-for="Mode" class="form-label">Mode</label>
 
-            <select asp-for="GameModes" asp-items="Html.GetEnumSelectList<GameModes>()" class="form-select">
+            <select asp-for="Mode" asp-items="Html.GetEnumSelectList<Mode>()" class="form-select">
 
                 <option value="">Any game mode</option> 
             </select>
@@ -73,9 +73,13 @@
 
 <hr />
 
-@if (Model.Games.Count == 0)
+@if (!Model.Searched)
 {
-    <p class="text-center"> Sorry, we couldn't find a suitable game - please try some of our other options! </p>
+    <p class="text-center"> Use the above filters to find your next favourite game! </p>
+}
+else if(!Model.Games.Any())
+{
+ <p class="text-center"> Sorry, we couldn't find a suitable game - please try some of our other options! </p>
 }
 else
 {

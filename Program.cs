@@ -25,7 +25,6 @@ namespace GameFinder
             builder.Services.AddScoped<IGameService, GameService>();
             builder.Services.AddScoped<IGenreService, GenreService>();
             builder.Services.AddScoped<IUserFavouriteService, UserFavouriteService>();
-            builder.Services.AddScoped<IGameSearchValidator, GameSearchValidator>();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(opt =>
             {
