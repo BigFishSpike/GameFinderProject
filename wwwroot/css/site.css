@@ -1,5 +1,10 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+
+    h1, h2, h3 {
+            text-shadow: 2px 3px 3px #d946c4;
+
+    }
 }
 
 @media (min-width: 768px) {
@@ -7,7 +12,12 @@ html {
     font-size: 16px;
   }
 }
-
+p {
+    font-size: 18px;
+    color: rgb(244, 255, 95);
+    line-height: 1.6;
+    text-shadow: #d946c4 1px 0.5px 4px;
+}
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -18,7 +28,10 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: Verdana;
+    margin-bottom: 60px;
+    background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+    color: #f4ff5f;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -32,7 +45,9 @@ body {
 .flex-container {
     display: flex;
     flex-flow: wrap;
-    justify-content: space-between;
+    justify-content: normal;
+    gap: 10px;
+    padding: 10px;
 }
 .game-image{
     width: 250px;
@@ -43,4 +58,81 @@ body {
     width: 250px;
     height: 250px;
     object-fit: cover;
+}
+.gamefinder-navbar {
+    background-color: #ffd06214;
+    border-bottom: 4px solid #d946c4;
+}
+.gamefinder-tabs .nav-link:hover {
+    color: #ffffff;
+    background-color: #ff99cc;
+    border-color: #ff99cc;
+}
+.gamefinder-navbar .navbar-brand {
+    font-family: fantasy,Rockwell;
+    font-size: 2rem;
+    font-weight: lighter;
+    font-style: oblique;
+    color: #f4ff5f;
+    letter-spacing: 2px;
+    text-shadow: 2px 3px 3px #d946c4;
+}
+.nav-link {
+    font-family: fantasy,Rockwell;
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: revert;
+    color: #f4ff5f;
+    letter-spacing: 2px;
+    text-shadow: 2px 1px 2px #d946c4;
+}
+h5 {
+    font-family: fantasy,Rockwell;
+    font-size: 1.5rem;
+    font-weight: lighter;
+    font-style: oblique;
+    color: #f4ff5f;
+    letter-spacing: 2px;
+    text-shadow: 2px 3px 3px #d946c4;
+}
+.card {
+    background-color: #2f405f;
+    color: #e2e8f0;
+    border: 1px solid #3b3f58;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-title {
+    color: #4defff;
+    font-weight: 700;
+    text-shadow: #ff0080 1px 2px 4px;
+}
+.btn-success {
+    background: rgb(254, 207, 95);
+    color: #11254a;
+}
+.btn-primary {
+    background: #0578bb;
+    color: #21ff0f;
+}
+.btn-secondary {
+    background: rgb(13, 37, 81);
+    color: rgb(255, 255, 255);
+}
+
+.form-select {
+    background: #0578bb;
+    color: rgb(244, 255, 95);
+    border: #ff99cc
+}
+.form-label {
+    color: #f4ff5f;
+    font-weight: 600;
+    text-shadow: #d946c4 1px 0.5px 4px;
+}
+.footer{
+    line-height: 50px;
+    width: 70%;
 }

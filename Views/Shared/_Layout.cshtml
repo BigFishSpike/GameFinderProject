@@ -11,20 +11,22 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm gamefinder-navbar border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Looking For Games</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
+
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
                     <ul class="nav nav-tabs">
 
                         <li class="nav-item">
 
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
 
                         </li>
 
@@ -36,7 +38,7 @@
 
                         <li class="nav-item">
 
-                            <a class="nav-link text-dark"" asp-controller="Genre" asp-action="List">Genres</a>
+                            <a class="nav-link" asp-controller="Genre" asp-action="List">Genres</a>
 
                         </li>
 
@@ -49,7 +51,7 @@
                         @if(User.Identity != null && User.Identity.IsAuthenticated)
                             {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="UserFavourite" asp-action="List"> My Games List </a>
+                                <a class="nav-link" asp-controller="UserFavourite" asp-action="List"> My Games List </a>
                             </li>
                             }
 
