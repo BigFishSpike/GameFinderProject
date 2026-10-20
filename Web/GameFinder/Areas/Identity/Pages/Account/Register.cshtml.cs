@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GameFinder.Areas.Identity.Pages.Account;
 
-using static GameFinder.Common.EntityValidation.User;
+using static Common.EntityValidation.User;
 public class RegisterModel : PageModel
 {
 
