@@ -22,5 +22,7 @@ namespace GameFinder.ViewModels.Game
         public DateOnly ReleaseDate { get; set; }
 
         public string? ImageUrl { get; set; }
+
+        public bool IsOwner { get; set; }
     }
 }

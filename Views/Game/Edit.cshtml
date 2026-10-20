@@ -1,0 +1,127 @@
+﻿@model GameEditViewModel
+
+<h3 class="text-center">Edit Game</h3>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-controller="Game" asp-action="Edit" method="post"> <input type="hidden" asp-for="Id" />
+
+    <div class="mb-2">
+
+        <label class="text-capitalize">Game name:</label>
+
+        <p class="form-text">Update the game's name!</p>
+
+        <input asp-for="Name" class="form-control" />
+
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-2">
+
+        <label class="text-capitalize">Game description:</label>
+        <p class="form-text">If the current description doesn't quite do it justice, make it sound better!</p>
+
+        <textarea asp-for="Description" class="form-control"></textarea>
+
+        <span asp-validation-for="Description" class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-2">
+
+        <label class="text-capitalize">Game image:</label>
+        <p class="form-text">Change the game image URL here - you can use the game's cover image, so that it's recognised easily!</p>
+
+        <input asp-for="ImageUrl" class="form-control" />
+
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-2">
+
+        <label class="text-capitalize">Release date:</label>
+        <p class="form-text">Wrong day, month, or year? No problem, fix it here!</p>
+
+        <input asp-for="ReleaseDate" type="date" class="form-control" />
+
+        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-2">
+
+        <label class="text-capitalize">Genre name:</label>
+        <p class="form-text"> If you don't see the genre you need, you can always add a new one to the Genres list!</p>
+
+        <select asp-for="GenreId" class="form-select">
+
+            <option value="0">Pick a genre</option>
+
+            @foreach (GenreListViewModel genre in Model.Genres)
+            {
+                <option value="@genre.Id">@genre.Name</option>
+            }
+
+        </select>
+
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Difficulties:</label>
+        <p class="form-text"> You know, sometimes accessibilty options have difficulty sliders hidden in there!</p>
+
+        @foreach (Difficulty difficulty in Enum.GetValues<Difficulty>())
+        {
+            <div class="form-check">
+
+                <input class="form-check-input" type="checkbox" name="Difficulties" value="@((int)difficulty)" id="difficulty-@difficulty" checked="@Model.Difficulties.Contains((int)difficulty)" />
+
+                <label class="form-check-label" for="difficulty-@difficulty"> @difficulty </label>
+
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Modes:</label>
+        <p class="form-text">Dueling also counts for PvP, if you were wondering, so feel free to add it also!</p>
+
+        @foreach (Mode mode in Enum.GetValues<Mode>())
+        {
+            <div class="form-check">
+
+                <input class="form-check-input" type="checkbox" name="Modes" value="@((int)mode)" id="mode-@mode" checked="@Model.Modes.Contains((int)mode)" />
+
+                <label class="form-check-label" for="mode-@mode"> @mode </label>
+
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Player Options:</label>
+        <p class="form-text">Sometimes developers add co-op later on - Stardew Valley did that!</p>
+
+        @foreach (PlayerOption playerOption in Enum.GetValues<PlayerOption>())
+        {
+            <div class="form-check">
+
+                <input class="form-check-input" type="checkbox" name="PlayerOptions" value="@((int)playerOption)" id="player-option-@playerOption" checked="@Model.PlayerOptions.Contains((int)playerOption)" />
+
+                <label class="form-check-label" for="player-option-@playerOption"> @playerOption </label>
+
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save changes</button>
+
+</form>

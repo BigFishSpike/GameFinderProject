@@ -7,6 +7,7 @@
 <hr />
 
  <div class = "row-justify-content-center"> <div class = "col-md-8"> <img src="@Model.ImageUrl" alt= "@Model.Name" class = "game-image mb-3"/>
+
     <p> Description: @Model.Description</p>
             <p>
                 Difficulties:
@@ -19,10 +20,9 @@
                     <span>Unspecified</span>
                 }
             </p>
-        <p> 
-            Gamemodes: @Model.Modes
-
-            @if (Model.Modes.Count > 0)
+            <p> 
+                Gamemodes:              
+                @if (Model.Modes.Count > 0)
                 {
                     @string.Join(", ", Model.Modes)
                 }
@@ -30,12 +30,12 @@
                 {
                     <span>Unspecified</span>
                 }
+                
+            </p>
             
-        </p>
-        <p> 
-            Player options: @Model.PlayerOptions
-
-            @if (Model.PlayerOptions.Count > 0)
+            <p>
+                Player options: 
+                @if (Model.PlayerOptions.Count > 0)
                 {
                     @string.Join(", ", Model.PlayerOptions)
                 }
@@ -45,7 +45,16 @@
                 }
 
             </p>
+
         <p> Release date: @Model.ReleaseDate.ToString(ApplicationDateFormat)</p>
+
+        @if (Model.IsOwner)
+        {
+            <a asp-controller="Game" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"> Delete Game </a>
+
+            <a asp-controller="Game" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary"> <i class="bi bi-pencil-square"></i> Edit Game </a>
+
+        }
 
     </div>
 </div>

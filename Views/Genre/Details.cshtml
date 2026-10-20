@@ -7,6 +7,21 @@
 <hr />
 <p class ="text-center">@Model.Description</p>
 
+@if (Model.IsOwner)
+{
+    <div class="d-flex gap-2 mb-3">
+
+        <a asp-controller="Genre" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"> <i class="bi bi-trash"></i> Delete Genre </a>
+
+    </div>
+}
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
 
 <div class = "flex-container">
 
