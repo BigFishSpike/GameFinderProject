@@ -1,0 +1,98 @@
+﻿@model GameSearchViewModel
+
+@{
+    ViewData["Title"] = "Find Your Game";
+}
+
+<h1 class="text-center">Find Your Next Game</h1>
+<p class="text-center">
+    What are you looking for?
+</p>
+
+<hr />
+
+<div class="container">
+
+    <form asp-controller="Game" asp-action="Search" method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Genre" class="form-label">Genre
+
+            </label>
+
+            <select asp-for="Genre" class="form-select">
+
+                <option value="">Any genre
+
+                </option>
+
+                 @foreach (GenreListViewModel genre in Model.Genres)
+                 {
+                     <option value="@genre.Name">@genre.Name</option>
+                 }
+                    </select>
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Difficulty" class="form-label">Difficulty</label>
+
+            <select asp-for="Difficulty" asp-items="Html.GetEnumSelectList<Difficulty>()" class="form-select">
+
+                <option value="">Any difficulty</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="PlayerOption" class="form-label">Players</label>
+
+            <select asp-for="PlayerOption" asp-items="Html.GetEnumSelectList<PlayerOption>()" class="form-select">
+
+                <option value="">Any player option</option>
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Mode" class="form-label">Mode</label>
+
+            <select asp-for="Mode" asp-items="Html.GetEnumSelectList<Mode>()" class="form-select">
+
+                <option value="">Any game mode</option> 
+
+            </select>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Search Games </button>
+
+        <a asp-controller="Game" asp-action="Search" class="btn btn-secondary"> Clear Filters </a>
+
+    </form>
+
+</div>
+
+<hr />
+
+@if (!Model.Searched)
+{
+    <p class="text-center"> Use the above filters to find your next favourite game! </p>
+}
+else if(!Model.Games.Any())
+{
+ <p class="text-center"> Sorry, we couldn't find a suitable game - please try some of our other options! </p>
+}
+else
+{
+    <div class="flex-container">
+        @foreach (GameListViewModel game in Model.Games)
+        {
+            <partial name="_GamesPartial" model="game" />
+        }
+    </div>
+}

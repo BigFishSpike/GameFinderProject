@@ -1,0 +1,27 @@
+﻿@model GameDeleteViewModel
+
+<h3 class="text-center">Delete Game</h3>
+
+<div class="alert alert-warning" role="alert"> Are you sure you want to delete this game? This cannot be undone. </div>
+
+<div class="card mb-3">
+
+    <div class="card-body">
+
+        <h5 class="card-title">@Model.Name</h5>
+
+        <p class="card-text">@Model.Id</p>
+
+    </div>
+
+</div>
+
+<form asp-controller="Game" asp-action="Delete" method="post">
+
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+
+    <a asp-controller="Game" asp-action="Details" asp-route-id="@Model.Id"class="btn btn-secondary"> Cancel </a>
+
+</form>

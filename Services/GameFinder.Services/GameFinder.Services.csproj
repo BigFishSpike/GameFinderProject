@@ -12,7 +12,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Data\GameFinder.Data\GameFinder.Data.csproj" />
-	  <ProjectReference Include="..\..\GameFinder.Common\GameFinder.Common.csproj" />
 	</ItemGroup>
 
 

@@ -6,7 +6,7 @@
     <Project Path="Services/GameFinder.Services/GameFinder.Services.csproj" Id="18b08399-03a3-4ab7-a859-fe073843ea8e" />
   </Folder>
   <Folder Name="/Web/">
-    <Project Path="GameFinder.csproj" />
+    <Project Path="Web/GameFinder/GameFinder/GameFinder.csproj" Id="689357f4-1e02-4ae5-916d-1b423a5c7824" />
   </Folder>
   <Project Path="GameFinder.Common/GameFinder.Common.csproj" Id="3218795c-07dc-4769-ac40-21b3b6d48423" />
 </Solution>

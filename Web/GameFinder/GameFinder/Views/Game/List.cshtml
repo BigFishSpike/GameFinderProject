@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GameListViewModel>
+@{    
+    ViewData["Title"] = "List of Games";
+}
+<h1 class ="text-center">Games List</h1>
+<hr />
+
+@if (TempData["ErrorMessage"] is string errorMessage)
+{
+    <div class="alert alert-warning">
+        @errorMessage
+    </div>
+}
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
+
+<p class ="text-center">Below you'll find all the games that we have listed!</p>
+<p class ="text-center">Want to add a game of your own? Feel free to do so once logged in!</p>
+
+@if(User.Identity?.IsAuthenticated == true)
+{
+    <div class="d-flex justify-content-end mb-3">
+
+    <a asp-controller="Game" asp-action="Add" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Add new game </a>
+
+    </div>
+}
+
+
+<div class = "flex-container">
+
+@foreach (GameListViewModel game in Model)
+{
+    <partial name="_GamesPartial" model="game"/>
+}
+</div>
