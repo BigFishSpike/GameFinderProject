@@ -19,8 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameFinder.Services\GameFinder.Services.csproj" />
-    <ProjectReference Include="..\IdentityNotes.Common\GameFinder.Common.csproj" />
+    <ProjectReference Include="Data\GameFinder.Data\GameFinder.Data.csproj" />
   </ItemGroup>
 
 </Project>
