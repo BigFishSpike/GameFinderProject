@@ -10,9 +10,12 @@
 @if (!Model.Games.Any())
 {
     <div class ="text-center">
+
     <p class="text-center">Your list is empty!</p> 
-         <a asp-controller="Game"asp-action="List" class="btn btn-primary"> Click here to view all the games and find one to add!</a>
-         </div>
+
+    <a asp-controller="Game"asp-action="List" class="btn btn-primary"> Click here to view all the games and find one to add!</a>
+
+    </div>
 }
 else
 {

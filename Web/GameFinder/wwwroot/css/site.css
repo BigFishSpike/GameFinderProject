@@ -2,29 +2,34 @@ html {
     font-size: 14px;
 
     h1, h2, h3 {
-            text-shadow: 2px 3px 3px #d946c4;
-
+        text-shadow: 2px 3px 3px #d946c4;
     }
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
+
 p {
     font-size: 18px;
     color: rgb(244, 255, 95);
     line-height: 1.6;
     text-shadow: #d946c4 1px 0.5px 4px;
 }
+p.game-genre {
+    margin-bottom: 0rem;
+    text-align: center;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -35,39 +40,45 @@ body {
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
 }
+
 .flex-container {
-    display: flex;
-    flex-flow: wrap;
-    justify-content: normal;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
-    padding: 10px;
 }
-.game-image{
-    width: 250px;
-    height: 200px;
-    object-fit: scale-down;
+.flex-container > .card {
+    display: flex;
+    flex-direction: column;
 }
-.genre-image{
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
+.flex-container > .card > a {
+    flex-grow: 1;
+}
+.flex-container > .card > .card-body:last-child {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+}
+.flex-container > .card > .card-body:last-child form {
+    text-align: center;
 }
 .gamefinder-navbar {
     background-color: #ffd06214;
     border-bottom: 4px solid #d946c4;
 }
+
 .gamefinder-tabs .nav-link:hover {
     color: #ffffff;
     background-color: #ff99cc;
     border-color: #ff99cc;
 }
+
 .gamefinder-navbar .navbar-brand {
     font-family: fantasy,Rockwell;
     font-size: 2rem;
@@ -77,6 +88,7 @@ body {
     letter-spacing: 2px;
     text-shadow: 2px 3px 3px #d946c4;
 }
+
 .nav-link {
     font-family: fantasy,Rockwell;
     font-size: 1rem;
@@ -86,6 +98,7 @@ body {
     letter-spacing: 2px;
     text-shadow: 2px 1px 2px #d946c4;
 }
+
 h5 {
     font-family: fantasy,Rockwell;
     font-size: 1.5rem;
@@ -94,6 +107,19 @@ h5 {
     color: #f4ff5f;
     letter-spacing: 2px;
     text-shadow: 2px 3px 3px #d946c4;
+}
+
+.game-image {
+    width: 250px;
+    height: 250px;
+    object-fit: scale-down;
+    display: block;
+    margin: 0 auto;
+}
+.placeholder-img {
+    width: 255px;
+    height: 250px;
+    object-fit: scale-down;
 }
 .card {
     background-color: #2f405f;
@@ -104,19 +130,41 @@ h5 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .card-title {
     color: #4defff;
     font-weight: 700;
     text-shadow: #ff0080 1px 2px 4px;
 }
+
+.game-card-title {
+    font-size: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.flex-container-genre {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+.genre-image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
+
 .btn-success {
     background: rgb(254, 207, 95);
     color: #11254a;
 }
+
 .btn-primary {
     background: #0578bb;
     color: #21ff0f;
 }
+
 .btn-secondary {
     background: rgb(13, 37, 81);
     color: rgb(255, 255, 255);
@@ -127,12 +175,14 @@ h5 {
     color: rgb(244, 255, 95);
     border: #ff99cc
 }
+
 .form-label {
     color: #f4ff5f;
     font-weight: 600;
     text-shadow: #d946c4 1px 0.5px 4px;
 }
-.footer{
+
+.footer {
     line-height: 50px;
     width: 70%;
 }

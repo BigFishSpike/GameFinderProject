@@ -8,9 +8,9 @@
 
 @if (User.Identity?.IsAuthenticated == true)
 {
-    <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-center mb-3">
 
-        <a asp-controller="Genre" asp-action="Add" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Add a genre </a>
+        <a asp-controller="Genre" asp-action="Add" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Create new genre </a>
 
     </div>
 }

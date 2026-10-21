@@ -44,5 +44,15 @@ button.accept-policy {
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px;
+  line-height: 55px;
+}
+.navbar {
+    border-bottom-width: 2px !important;
+    border-color: #03dbff30 !important;
+}
+
+footer {
+    border-top-width: 2px !important;
+    border-color: #ffec8873 !important;
+    background-color: #e4a8ff6b !important;
 }
