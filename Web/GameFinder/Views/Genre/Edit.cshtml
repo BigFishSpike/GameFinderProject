@@ -21,9 +21,9 @@
 
             <div class="mb-3">
 
-                <label asp-for="Name" class="form-label"></label>
-
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="form-label">Genre name:</label>
+                <p class="form-text">Give it the name it deserves!</p>
+                <input asp-for="Name" class="form-control" placeholder="Enter the name here!" />
 
                 <span asp-validation-for="Name" class="text-danger"></span>
 
@@ -31,9 +31,10 @@
 
             <div class="mb-3">
 
-                <label asp-for="Description" class="form-label"></label>
+                <label asp-for="Description" class="form-label"> Genre description:</label>
+                <p class="form-text">Give it some charm, make it sound as good as you feel playing the genre!</p>
 
-                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter description here!"></textarea>
 
                 <span asp-validation-for="Description" class="text-danger"></span>
 
@@ -41,13 +42,15 @@
 
             <div class="mb-3">
 
-                <label asp-for="ImageUrl" class="form-label"></label>
+                <label asp-for="ImageUrl" class="form-label">Genre image:</label>
+                <p class="form-text">Add the URL of the picture that truly represents the genre!</p>
 
-                <input asp-for="ImageUrl" class="form-control" />
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://www.examplelink.com/"/>
 
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
 
             </div>
+
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
 

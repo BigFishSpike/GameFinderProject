@@ -3,10 +3,18 @@
 <a asp-controller="Genre" asp-action="Details" asp-route-id="@Model.Id" class="text-decoration-none text-dark">
 
 
-<div class="card mb-2">
-    <img src="@Model.ImageUrl" class="genre-image" alt="@Model.Name" />
-    <div class="card-body">
-        <h5 class="card-title mb-1"> @Model.Name</h5>  
+<div class="card mb-2 game-hover">
+        <div class="card-body">
+        @if(string.IsNullOrWhiteSpace(Model.ImageUrl))
+        {                       
+            <img src="/images/genrePlaceholder.png" class="genre-image placeholder-img" alt="@Model.Name" />
+        }
+        else
+        {            
+            <img src="@Model.ImageUrl" class ="genre-image" alt="@Model.Name" />
+        }
+
+            <h5 class="card-title game-card-title text-center mb-1"> @Model.Name</h5>
     </div>
 </div>
 

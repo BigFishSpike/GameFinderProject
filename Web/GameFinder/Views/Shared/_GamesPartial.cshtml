@@ -1,6 +1,6 @@
 ﻿@model GameListViewModel
 
-<div class="card mb-2">
+<div class="card mb-2 game-hover">
 
 <a asp-controller ="Game" asp-action = "Details" asp-route-id="@Model.Id" class = "text-decoration-none text-dark">
 
@@ -17,23 +17,42 @@
 
         @if(Model.ShowGenre)
         {
-            <p class="game-genre">Genre: @Model.GenreName</p>
+            <p class="game-genre"> Genre: @Model.GenreName</p>
         }
                    
         </div>
     </a>
+
     @if (User.Identity != null && User.Identity.IsAuthenticated)
     {
         <div class="card-body pt-0">
-            <form asp-controller="UserFavourite" asp-action="Add" method="post">
 
-                <input type="hidden" name="gameId" value="@Model.Id" />
+            @if (Model.IsFavourite)
+            {
+                <form asp-controller="UserFavourite" asp-action="Remove" method="post">
 
-                <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+                    @Html.AntiForgeryToken()
 
-                <button type="submit" class="btn btn-primary"> Add to Favourites </button>
+                    <input type="hidden" name="gameId" value="@Model.Id" />
 
-            </form>
+                    <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+
+                    <button type="submit" class="btn btn-danger"> Remove from your list </button>
+
+                </form>
+            }
+            else
+            {
+                <form asp-controller="UserFavourite" asp-action="Add" method="post">
+
+                    <input type="hidden" name="gameId" value="@Model.Id" />
+
+                    <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+
+                    <button type="submit" class="btn btn-primary"> Add to your list </button>
+
+                </form>                
+            }
         </div>
     }
 

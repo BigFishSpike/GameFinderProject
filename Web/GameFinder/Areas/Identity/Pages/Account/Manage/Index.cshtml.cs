@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using GameFinder.Data;
 
 namespace GameFinder.Areas.Identity.Pages.Account.Manage;
 
@@ -53,21 +52,20 @@ public class IndexModel : PageModel
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        [Phone]
-        [Display(Name = "Phone number")]
-        public string? PhoneNumber { get; set; }
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Username")]
+        public string Username { get; set; } = string.Empty;
+
     }
 
     private async Task LoadAsync(IdentityUser user)
     {
-        var userName = await _userManager.GetUserNameAsync(user);
-        var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+        string? userName = await _userManager.GetUserNameAsync(user);
 
-        Username = userName;
-
-        Input = new InputModel
+        Username = userName; Input = new InputModel
         {
-            PhoneNumber = phoneNumber
+            Username = userName ?? string.Empty,
         };
     }
 
@@ -85,7 +83,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await _userManager.GetUserAsync(User);
+        IdentityUser? user = await _userManager.GetUserAsync(User);
         if (user == null)
         {
             return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -96,20 +94,28 @@ public class IndexModel : PageModel
             await LoadAsync(user);
             return Page();
         }
+        string? currentUsername = await _userManager.GetUserNameAsync(user);
 
-        var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-        if (Input.PhoneNumber != phoneNumber)
+        if (Input.Username != currentUsername)
         {
-            var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-            if (!setPhoneResult.Succeeded)
+            IdentityResult result = await _userManager
+                .SetUserNameAsync(user, Input.Username);
+
+            if (!result.Succeeded)
             {
-                StatusMessage = "Unexpected error when trying to set phone number.";
-                return RedirectToPage();
+                foreach (IdentityError error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                await LoadAsync(user);
+                return Page();
             }
         }
-
         await _signInManager.RefreshSignInAsync(user);
+
         StatusMessage = "Your profile has been updated";
+
         return RedirectToPage();
     }
 }

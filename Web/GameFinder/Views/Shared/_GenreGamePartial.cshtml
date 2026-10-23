@@ -1,13 +1,57 @@
 ﻿@model GameListViewModel
+<div class="card mb-2 game-hover">
 
 <a asp-controller ="Game" asp-action = "Details" asp-route-id="@Model.Id" class = "text-decoration-none text-dark">
 
-<div class="card mb-2">
-    <div class="card-body">
-        <h5 class="card-title mb-1"> @Model.Name</h5>
+        <div class="card-body">
 
-        <img src="@Model.ImageUrl" class ="game-image" alt="@Model.Name" />
+            @if (string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <img src="/images/placeholder.jpg" class="game-image placeholder-img" alt="@Model.Name" />
+            }
+            else
+            {
+                <img src="@Model.ImageUrl" class="game-image" alt="@Model.Name" />
+            }
+            <h5 class="game-genre text-center"> @Model.Name</h5>
+
+        </div>
+    </a> 
     
-    </div>
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        @if (Model.IsFavourite)
+        {
+            <div class="card-body pt-0">
+                
+                <form asp-controller="UserFavourite" asp-action="Remove" method="post">
+                    
+                    @Html.AntiForgeryToken()
+                    
+                    <input type="hidden" name="gameId" value="@Model.Id" />
+                    
+                    <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+                    
+                    <button type="submit" class="btn btn-danger"> Remove from your list </button>
+                
+                </form>
+
+            </div>
+        }
+        else
+        {
+            <div class="card-body pt-0">
+
+                <form asp-controller="UserFavourite" asp-action="Add" method="post">
+
+                    <input type="hidden" name="gameId" value="@Model.Id" />
+
+                    <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+
+                    <button type="submit" class="btn btn-primary"> Add to your list </button>
+
+                </form>
+            </div>                
+        }
+    }
 </div>
-</a>

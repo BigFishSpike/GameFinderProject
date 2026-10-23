@@ -12,7 +12,7 @@
 
         <p class="form-text">Update the game's name!</p>
 
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control" placeholder="Enter the name here!"/>
 
         <span asp-validation-for="Name" class="text-danger"></span>
 
@@ -23,7 +23,7 @@
         <label class="text-capitalize">Game description:</label>
         <p class="form-text">If the current description doesn't quite do it justice, make it sound better!</p>
 
-        <textarea asp-for="Description" class="form-control"></textarea>
+        <textarea asp-for="Description" class="form-control" placeholder="Enter description here!"></textarea>
 
         <span asp-validation-for="Description" class="text-danger"></span>
 
@@ -34,7 +34,7 @@
         <label class="text-capitalize">Game image:</label>
         <p class="form-text">Change the game image URL here - you can use the game's cover image, so that it's recognised easily!</p>
 
-        <input asp-for="ImageUrl" class="form-control" />
+        <input asp-for="ImageUrl" class="form-control" placeholder="https://www.examplelink.com/"/>
 
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
 

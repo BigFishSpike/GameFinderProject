@@ -7,19 +7,20 @@
     using GameFinder.ViewModels.Genre;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using static GameFinder.Common.EntityValidation;
+
     using static GameFinder.Common.EntityValidation.ApplicationConstants;
 
     public class GameController : BaseController
     {
         private readonly IGameService gameService;
         private readonly IGenreService genreService;
+        private readonly IUserFavouriteService userFavouriteService;
 
-        public GameController(IGameService gameService, IGenreService genreService)
+        public GameController(IGameService gameService, IGenreService genreService, IUserFavouriteService userFavouriteService)
         {
             this.gameService = gameService;
             this.genreService = genreService;
+            this.userFavouriteService = userFavouriteService;
         }
 
 
@@ -27,8 +28,7 @@
         [AllowAnonymous]
         public async Task<IActionResult> List()
         {
-            IEnumerable<GameDto> games = await gameService
-                .GetGamesList(EntitiesPerPage);
+            IEnumerable<GameDto> games = await gameService.GetGamesList(EntitiesPerPage);
 
             IEnumerable<GameListViewModel> gameListViewModels = games
                 .Select(g => new GameListViewModel()
@@ -39,6 +39,22 @@
                     GenreName = g.GenreName,
                 })
                 .ToList();
+            
+            string? userId = GetUserId();
+
+            if (userId != null)
+            {
+                IEnumerable<GameDto> favourites = await userFavouriteService.GetUserFavouritesAsync(userId);
+
+                HashSet<int> favouriteGameIds = favourites
+                    .Select(g => g.Id)
+                    .ToHashSet();
+
+                foreach (GameListViewModel game in gameListViewModels)
+                {
+                    game.IsFavourite = favouriteGameIds.Contains(game.Id);
+                }
+            }
 
             return View(gameListViewModels);
         }
@@ -144,9 +160,25 @@
                 })
                 .Take(EntitiesPerPage)
                 .ToList();
+            
+            string? userId = GetUserId();
 
-            IEnumerable<GenreDto> genreDtos = await genreService
-                .GenresGetList();
+            if (userId != null)
+            {
+                IEnumerable<GameDto> favourites = await userFavouriteService.GetUserFavouritesAsync(userId);
+
+                HashSet<int> favouriteGameIds = favourites
+                    .Select(g => g.Id)
+                    .ToHashSet();
+
+                foreach (GameListViewModel game in gameModel.Games)
+                {
+                    game.IsFavourite = favouriteGameIds.Contains(game.Id);
+                }
+
+            }
+
+            IEnumerable<GenreDto> genreDtos = await genreService.GenresGetList();
 
             gameModel.Genres = genreDtos
                 .Select(g => new GenreListViewModel()

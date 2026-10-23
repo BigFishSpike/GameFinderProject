@@ -4,7 +4,7 @@
 }
 <h1 class ="text-center">Genres</h1>
 <hr />
-<p class ="text-center">Want a specific genre? You're in the right place!</p>
+<p class="text-center">Want a specific genre? You're in the right place! And if you want to add a new genre, use the below button to do it!</p>
 
 @if (User.Identity?.IsAuthenticated == true)
 {
@@ -12,20 +12,6 @@
 
         <a asp-controller="Genre" asp-action="Add" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Create new genre </a>
 
-    </div>
-}
-
-@if (TempData["ErrorMessage"] is string errorMessage)
-{
-    <div class="alert alert-warning" role="alert">
-        @errorMessage
-    </div>
-}
-
-@if (TempData["SuccessMessage"] is string successMessage)
-{
-    <div class="alert alert-success" role="alert">
-        @successMessage
     </div>
 }
 

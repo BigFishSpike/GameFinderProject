@@ -61,6 +61,7 @@
         {
             return await dbContext.Games
                .OrderBy(g => g.GenreId)
+               .ThenBy(g => g.Id)
                .ThenBy(g => g.Name)
                .Take(gamesPerPage)
                .Select(g => new GameDto()

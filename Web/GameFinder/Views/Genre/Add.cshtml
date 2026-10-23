@@ -17,9 +17,11 @@ ViewData["Title"] = "Add your own Genre!";
 
         <div class="mb-3">
 
-            <label asp-for="Name" class="form-label"></label>
+            <label asp-for="Name" class="form-label"> Genre name: </label>
 
-            <input asp-for="Name" class="form-control" />
+                    <p class="form-text">Tell us the name of your genre!</p>
+
+                <input asp-for="Name" class="form-control" placeholder="Enter the name here!" />
 
             <span asp-validation-for="Name" class="text-danger"></span>
 
@@ -27,9 +29,10 @@ ViewData["Title"] = "Add your own Genre!";
 
         <div class="mb-3">
 
-            <label asp-for="Description" class="form-label"></label>
+            <label asp-for="Description" class="form-label">Genre description:</label>
+                                <p class="form-text">Give it some flavour - what's it about and what do you do in it?</p>
 
-            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter description here!"></textarea>
 
             <span asp-validation-for="Description" class="text-danger"></span>
 
@@ -37,9 +40,10 @@ ViewData["Title"] = "Add your own Genre!";
 
         <div class="mb-3">
 
-            <label asp-for="ImageUrl" class="form-label"></label>
+            <label asp-for="ImageUrl" class="form-label"> Genre image:</label>
+                                <p class="form-text">Add the URL of the picture that truly represents the genre!</p>
 
-            <input asp-for="ImageUrl" class="form-control" />
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://www.examplelink.com/" />
 
             <span asp-validation-for="ImageUrl" class="text-danger"></span>
 
@@ -47,9 +51,10 @@ ViewData["Title"] = "Add your own Genre!";
 
         <div class="d-flex justify-content-between mt-4">
 
-            <a asp-controller="Genre" asp-action="List" class="btn btn-secondary"> Cancel </a>
+            <button type="submit" class="btn btn-primary"> Add it! </button>
 
-            <button type="submit" class="btn btn-success"> Create Genre </button>
+
+            <a asp-controller="Genre" asp-action="List" class="btn btn-secondary"> Cancel </a>
 
         </div>
     </form>

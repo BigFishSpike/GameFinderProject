@@ -6,11 +6,11 @@
 
     <div class="mb-2">
 
-        <label class="text-capitalize">Game name:</label>
+        <label class="form-label">Game name:</label>
 
         <p class="form-text">Give us the name of the game!</p>
 
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control" placeholder="Enter the name here!" />
 
         <span asp-validation-for="Name" class="text-danger"></span>
 
@@ -18,10 +18,10 @@
 
     <div class="mb-2">
 
-        <label class="text-capitalize">Game description:</label>
+        <label class="form-label">Game description:</label>
         <p class="form-text">What's the game about? Make it enticing, and give people a reason to want to dive into it!</p>
 
-        <textarea asp-for="Description" class="form-control"></textarea>
+        <textarea asp-for="Description" class="form-control" placeholder="Enter description here!"></textarea>
 
         <span asp-validation-for="Description" class="text-danger"></span>
 
@@ -29,10 +29,10 @@
 
     <div class="mb-2">
 
-        <label class="text-capitalize">Game image:</label>
+        <label class="form-label">Game image:</label>
         <p class="form-text">Add the game image URL here - you can use the game's cover image, so that it's recognised easily!</p>
 
-        <input asp-for="ImageUrl" class="form-control" />
+        <input asp-for="ImageUrl" class="form-control" placeholder="https://www.examplelink.com/" />
 
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
 
@@ -40,7 +40,7 @@
 
     <div class="mb-2">
 
-        <label class="text-capitalize">Release date:</label>
+        <label class="form-label">Release date:</label>
         <p class="form-text">Try to remember it by heart - what are the odds you even remember the correct month or year?</p>
 
         <input asp-for="ReleaseDate" type="date" class="form-control" />
@@ -51,7 +51,7 @@
 
     <div class="mb-2">
 
-        <label class="text-capitalize">Genre name:</label>
+        <label class="form-label">Genre name:</label>
         <p class="form-text">Can't find the right one? Add a new one to the Genres list first!</p>
 
         <select asp-for="GenreId" class="form-select"> <option value="0">Pick a genre</option>

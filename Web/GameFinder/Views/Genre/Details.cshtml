@@ -12,19 +12,13 @@
     <div class="d-flex gap-2 mb-3">
 
         <a asp-controller="Genre" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"> <i class="bi bi-trash"></i> Delete Genre </a>
+        <a asp-controller="Genre" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary"> Edit Genre </a>
 
     </div>
-}
 
-@if (TempData["SuccessMessage"] is string successMessage)
-{
-    <div class="alert alert-success" role="alert">
-        @successMessage
-    </div>
 }
 
 <div class = "flex-container">
-
 
 @foreach (GameListViewModel game in Model.Games)
 {

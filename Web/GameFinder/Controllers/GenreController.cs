@@ -10,10 +10,12 @@
     public class GenreController : BaseController
     {
         private readonly IGenreService genreService;
+        private readonly IUserFavouriteService userFavouriteService;
 
-        public GenreController(IGenreService genreService)
+        public GenreController(IGenreService genreService, IUserFavouriteService userFavouriteService)
         {
             this.genreService = genreService;
+            this.userFavouriteService = userFavouriteService;
         }
 
         [HttpGet]
@@ -57,6 +59,17 @@
 
             bool isOwner = !string.IsNullOrWhiteSpace(userId) && genreDetailsDto.CreatedByUserId == userId;
 
+            HashSet<int> favouriteGameIds = new HashSet<int>();
+
+            if (userId != null)
+            {
+                IEnumerable<GameDto> favourites = await userFavouriteService.GetUserFavouritesAsync(userId);
+
+                favouriteGameIds = favourites
+                    .Select(g => g.Id)
+                    .ToHashSet();
+            }
+
             GenreDetailsViewModel? genreDetailsViewModel = new GenreDetailsViewModel
             {
                 Id = genreDetailsDto.Id,
@@ -72,6 +85,7 @@
                     Name = gm.Name,
                     ImageUrl = gm.ImageUrl,
                     ShowGenre = false,
+                    IsFavourite = favouriteGameIds.Contains(gm.Id),
                 })
                 .ToList()
             };

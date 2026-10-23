@@ -58,6 +58,15 @@
 
         public async Task<int> GenreAdd(GenreAddDto genreDto)
         {
+            
+            bool nameExists = await dbContext.Genres.AnyAsync(g => g.Name == genreDto.Name);
+
+            if (nameExists)
+            {
+                return 0;
+            }
+
+
             Genre genre = new Genre
             {
                 Name = genreDto.Name,

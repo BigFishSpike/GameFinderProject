@@ -1,14 +1,11 @@
-﻿using GameFinder.Data;
-using GameFinder.Data.Models;
-using GameFinder.Services.DTOs;
-using GameFinder.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GameFinder.Services
+﻿namespace GameFinder.Services
 {
+    using GameFinder.Data;
+    using GameFinder.Data.Models;
+    using GameFinder.Services.DTOs;
+    using GameFinder.Services.Interfaces;
+    using Microsoft.EntityFrameworkCore;
+
     public class UserFavouriteService : IUserFavouriteService
     {
         private readonly GameFinderDbContext dbContext;
@@ -27,6 +24,7 @@ namespace GameFinder.Services
                     Id = uf.Game.Id,
                     Name = uf.Game.Name,
                     ImageUrl = uf.Game.ImageUrl,
+                    GenreName = uf.Game.Genre.Name,
                 })
                 .ToListAsync();
 

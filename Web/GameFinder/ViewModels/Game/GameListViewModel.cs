@@ -15,6 +15,8 @@ namespace GameFinder.ViewModels.Game
         [Required]
         public string GenreName { get; set; } = null!;
 
-        public bool ShowGenre { get; set; } = true;
+        public bool ShowGenre { get; set; } = true; 
+        
+        public bool IsFavourite { get; set; }
     }
 }

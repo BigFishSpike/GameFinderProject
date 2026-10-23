@@ -1,60 +1,88 @@
 ﻿@model GameDetailsViewModel
 
-@{    
-    ViewData["Title"] = @Model.Name;
+@{
+    ViewData["Title"] = Model.Name;
 }
-<h1 class ="text-center">@Model.Name</h1>
+
+<h1 class="text-center">@Model.Name</h1>
 <hr />
 
- <div class = "row-justify-content-center"> <div class = "col-md-8"> <img src="@Model.ImageUrl" alt= "@Model.Name" class = "game-image mb-3"/>
+<div class="card game-details-card">
+    <div class="card-body">
 
-    <p> Description: @Model.Description</p>
-            <p>
-                Difficulties:
-                @if (Model.Difficulties.Count > 0)
+        <div class="row justify-content-center g-4">
+
+            <div class="col-md-4">
+
+                <div class="card">
+
+                    <img src="@(string.IsNullOrWhiteSpace(Model.ImageUrl) ? "/images/placeholder.jpg" : Model.ImageUrl)" alt="@Model.Name" />
+
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+               
+                <p>
+                    <strong>Difficulties:</strong>
+
+                    @if (Model.Difficulties.Count > 0)
+                    {
+                        @string.Join(", ", Model.Difficulties)
+                    }
+
+                    else
+                    {
+                        <span> No information available </span>
+                    }
+
+                </p>
+
+                <p>
+                    <strong>Gamemodes:</strong>
+
+                    @if (Model.Modes.Count > 0)
+                    {
+                        @string.Join(", ", Model.Modes)
+                    }
+
+                    else
+                    {
+                        <span> No information available </span>
+                    }
+
+                </p>
+
+                <p> 
+                    <strong>Player options:</strong>
+
+                    @if (Model.PlayerOptions.Count > 0)
+                    {
+                        @string.Join(", ", Model.PlayerOptions)
+                    }
+
+                    else
+                    {
+                        <span> No information available </span>
+                    }
+
+                </p>
+
+                <p> <strong>Release date:</strong> @Model.ReleaseDate.ToString(ApplicationDateFormat) </p>
+
+                 <h5>Game overview:</h5>
+                <p>@Model.Description</p>
+
+                @if (Model.IsOwner)
                 {
-                    @string.Join(", ", Model.Difficulties)
-                }
-                else
-                {
-                    <span>Unspecified</span>
-                }
-            </p>
-            <p> 
-                Gamemodes:              
-                @if (Model.Modes.Count > 0)
-                {
-                    @string.Join(", ", Model.Modes)
-                }
-                else
-                {
-                    <span>Unspecified</span>
-                }
-                
-            </p>
-            
-            <p>
-                Player options: 
-                @if (Model.PlayerOptions.Count > 0)
-                {
-                    @string.Join(", ", Model.PlayerOptions)
-                }
-                else
-                {
-                    <span>Unspecified</span>
+                    <a asp-controller="Game" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary"> <i class="bi bi-pencil-square"></i> Edit Game </a>
+
+                    <a asp-controller="Game" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"> Delete Game </a>
                 }
 
-            </p>
+            </div>
 
-        <p> Release date: @Model.ReleaseDate.ToString(ApplicationDateFormat)</p>
-
-        @if (Model.IsOwner)
-        {
-            <a asp-controller="Game" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"> Delete Game </a>
-
-            <a asp-controller="Game" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary"> <i class="bi bi-pencil-square"></i> Edit Game </a>
-
-        }
-
+        </div>
     </div>
 </div>

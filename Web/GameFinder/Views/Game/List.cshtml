@@ -5,25 +5,15 @@
 <h1 class ="text-center">Games List</h1>
 <hr />
 
-@if (TempData["ErrorMessage"] is string errorMessage)
+@if (User.Identity == null || User.Identity?.IsAuthenticated == false)
 {
-    <div class="alert alert-warning">
-        @errorMessage
-    </div>
+    <p class="text-center">Below you'll find all the games that we have! Want to add one of your own? Register or log in, and do it!</p>
 }
-
-@if (TempData["SuccessMessage"] is string successMessage)
-{
-    <div class="alert alert-success" role="alert">
-        @successMessage
-    </div>
-}
-
-<p class ="text-center">Below you'll find all the games that we have listed!</p>
-<p class ="text-center">Want to add a game of your own? Feel free to do so once logged in!</p>
 
 @if(User.Identity?.IsAuthenticated == true)
 {
+    <p class="text-center"> Below you'll find all the games that we have! Want to add a game of your own? Use the below button!</p>
+
     <div class="d-flex justify-content-center mb-3">
 
     <a asp-controller="Game" asp-action="Add" class="btn btn-success ms-5 mt-2"> <i class="bi bi-plus-circle"></i> Create new game </a>

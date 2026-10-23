@@ -1,11 +1,11 @@
-﻿using GameFinder.Services.DTOs;
-using GameFinder.Services.Interfaces;
-using GameFinder.ViewModels.Game;
-using GameFinder.ViewModels.User;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameFinder.Controllers
+﻿namespace GameFinder.Controllers
 {
+    using GameFinder.Services.DTOs;
+    using GameFinder.Services.Interfaces;
+    using GameFinder.ViewModels.Game;
+    using GameFinder.ViewModels.User;
+    using Microsoft.AspNetCore.Mvc;
+
     public class UserFavouriteController : BaseController
     {
         private readonly IUserFavouriteService userFavouriteService;
@@ -36,7 +36,7 @@ namespace GameFinder.Controllers
                     Name = game.Name,
                     ImageUrl = game.ImageUrl,
                     GenreName = game.GenreName,
-                    ShowGenre = false
+                    ShowGenre = true,
                 })
                 .ToList(),
             };
@@ -57,6 +57,8 @@ namespace GameFinder.Controllers
 
             await userFavouriteService.AddFavouriteAsync(userId, gameId);
 
+            TempData["SuccessMessage"] = "The game has been added to your Games List!";
+
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
                 return LocalRedirect(returnUrl);
@@ -64,9 +66,10 @@ namespace GameFinder.Controllers
 
             return RedirectToAction("List", "Game");
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Remove([FromForm]int gameId) 
+        public async Task<IActionResult> Remove([FromForm]int gameId, string? returnUrl) 
         {
 
             string? userId = GetUserId();
@@ -74,6 +77,22 @@ namespace GameFinder.Controllers
             if (userId == null)
             {
                 return Challenge();
+            }
+            
+            bool removed = await userFavouriteService.RemoveFavouriteAsync(userId, gameId);
+
+            if (removed)
+            {
+                TempData["SuccessMessage"] = "The game has been removed from your list.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Game not found.";
+            }
+
+            if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
             }
 
             await userFavouriteService.RemoveFavouriteAsync(userId, gameId);
