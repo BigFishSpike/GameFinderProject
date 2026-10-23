@@ -108,13 +108,7 @@
 
             IEnumerable<GenreDto> genres = await genreService.GenresGetList();
 
-            gameModel.Genres = genres
-                .Select(g => new GenreListViewModel
-                {
-                    Id = g.Id,
-                    Name = g.Name
-                })
-                .ToList();
+            gameModel.Genres = await GetGenres();
 
             return View(gameModel);
         }
@@ -125,15 +119,8 @@
         {
             if (!ModelState.IsValid)
             {
-                gameModel.Genres = (await genreService.GenresGetList())
-                    .Select(g => new GenreListViewModel()
-                    {
-                        Id = g.Id,
-                        Name = g.Name,
-                        ImageUrl = g.ImageUrl,
-                    }).
-                    ToList();
-                
+                gameModel.Genres = await GetGenres();
+
                 return View(gameModel);
             }
 
@@ -147,8 +134,7 @@
                 Difficulty = gameModel.Difficulty,
             };
 
-            IEnumerable<GameDto> gameDtos = await gameService
-                .FindGames(userRequests);
+            IEnumerable<GameDto> gameDtos = await gameService.FindGames(userRequests);
 
             gameModel.Games = gameDtos
                 .Select(g => new GameListViewModel()
@@ -180,14 +166,7 @@
 
             IEnumerable<GenreDto> genreDtos = await genreService.GenresGetList();
 
-            gameModel.Genres = genreDtos
-                .Select(g => new GenreListViewModel()
-                {
-                    Id = g.Id,
-                    Name = g.Name,
-                    ImageUrl = g.ImageUrl,
-                })
-                .ToList();
+            gameModel.Genres = await GetGenres();
 
 
             return View(gameModel);
