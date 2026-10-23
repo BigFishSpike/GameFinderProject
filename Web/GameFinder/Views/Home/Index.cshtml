@@ -1,12 +1,293 @@
-﻿@{
+﻿@model HomeViewModel
+
+@{
     ViewData["Title"] = "Home";
 }
+<div class="container home-page">
+    <div class="d-flex align-items-center gap-2">
 
-<div class="text-center">
-    <h1 class="display-4">Looking For Games? Look no further!</h1>
-    <p class ="">Find your next favorite game! Wether you're looking for something that will help you relax, or something with a bit more kick - we have it all!</p>
-</div>
+        <h1>Are you.. </h1>
+        <h5 class="display-5">Looking For Games</h5> 
+        <h1>?  Then look no further!</h1>
 
-<div class="text-left">
-        <p> Lorem ipsum provide me with gypsum. Also, remove me.</a></p>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-md-7">
+            <div class="text-start mt-5 mb-3">
+                <h5>
+                    - We've got games!
+                </h5>
+                <h5>
+                    - We've got genres!
+                </h5>
+                <h5>
+                    - We've got search options!
+                </h5>
+                <h5>
+                    - We've even got quotes!
+                </h5>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div id="quotesCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <blockquote class="home-quote">
+
+                            <p class="home-quote">"It's definitely a site!"</p> 
+                            <p class="quote-author">-ProGamer24</p>
+
+                        </blockquote>
+                    </div>
+                    <div class="carousel-item">
+                        <blockquote class="home-quote">
+                            <p class="home-quote">"The colors are far-out, man!"</p>
+                            <p class="quote-author">-A dude</p>
+                        </blockquote>
+                    </div>
+                    <div class="carousel-item">
+                        <blockquote class="home-quote">
+                            <p class="home-quote">"It's okay."</p>
+                            <p class="quote-author">-Some gaming website</p>
+
+                        </blockquote>
+                    </div>
+
+                    <div class="carousel-item">
+                        <blockquote class="home-quote">
+                            <p class="home-quote">"That's nice, dear."</p>
+                            <p class="quote-author">-Grandma</p>
+                        </blockquote>
+                    </div>
+
+                    <div class="carousel-item">
+                        <blockquote class="home-quote">
+                            <p class="home-quote">"I don't even play video games."</p>
+                            <p class="quote-author">-Person on the street</p>
+                        </blockquote>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-start mt-5 mb-3">
+        <h3 class="text-center">Below you'll find some of what we offer!</h3>
+    </div>
+
+   <div class="container home-carousel-container mt-2">
+      <div class="row g-4">
+
+            <div class="col-12 col-md-6 col-xl-4">
+
+                <div class="carousel-heading d-flex align-items-center justify-content-center">
+
+                    <h2 class="text-center">From the catalogue:</h2>
+
+                </div>
+
+                <div id="featuredGamesCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+
+                        @for (int i = 0; i < Model.FeaturedGames.Count; i++)
+                        {
+                            <button type="button"
+                                    data-bs-target="#featuredGamesCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-label="Slide @(i + 1)" aria-current="@(i == 0 ? "true" : null)">
+                            </button>
+                        }
+
+                    </div>
+
+                    <div class="carousel-inner">
+
+                        @for (int i = 0; i < Model.FeaturedGames.Count; i++)
+                        {
+                            GameListViewModel game = Model.FeaturedGames[i];
+
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+
+                                <a asp-controller="Game" asp-action="Details" asp-route-id="@game.Id">
+
+                                    <img src="@(string.IsNullOrWhiteSpace(game.ImageUrl) ? "/images/placeholder.jpg" : game.ImageUrl)" class="d-block w-100 carousel-image" alt="@game.Name">
+
+                                </a>
+
+                            </div>
+                        }
+
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#featuredGamesCarousel" data-bs-slide="prev">
+
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+
+                    </button>
+
+                    <button class="carousel-control-next" type="button" data-bs-target="#featuredGamesCarousel" data-bs-slide="next">
+
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="carousel-heading d-flex align-items-center justify-content-center">
+
+                    <h2 class="text-center">Check out our genres:</h2>
+
+                </div>
+
+                <div id="featuredGenresCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+
+                        @for (int i = 0; i < Model.FeaturedGenres.Count; i++)
+                        {
+                            <button type="button"
+                                    data-bs-target="#featuredGenresCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-label="Slide @(i + 1)" aria-current="@(i == 0 ? "true" : null)">
+                            </button>
+                        }
+
+                    </div>
+
+                    <div class="carousel-inner">
+
+                        @for (int i = 0; i < Model.FeaturedGenres.Count; i++)
+                        {
+                            GenreListViewModel genre = Model.FeaturedGenres[i];
+
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+
+                                <a asp-controller="Genre" asp-action="Details" asp-route-id="@genre.Id">
+
+                                    <img src="@(string.IsNullOrWhiteSpace(genre.ImageUrl) ? "/images/genrePlaceholder.png" : genre.ImageUrl)" class="d-block w-100 carousel-image" alt="@genre.Name">
+
+                                </a>
+
+                            </div>
+                        }
+
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#featuredGenresCarousel" data-bs-slide="prev">
+
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+
+                    </button>
+
+                    <button class="carousel-control-next" type="button" data-bs-target="#featuredGenresCarousel" data-bs-slide="next">
+
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+              <div class="col-12 col-md-6 col-xl-4">
+
+                    <div class="carousel-heading d-flex align-items-center justify-content-center">
+
+                        <h2 class="text-center">Your highlights:</h2>
+
+                    </div>
+
+
+                @if (Model.UserFavouriteGames.Any())
+                {
+                    <div id="userFavouritesCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                        <div class="carousel-indicators">
+
+                            @for (int i = 0; i < Model.UserFavouriteGames.Count; i++)
+                            {
+                                <button type="button"
+                                        data-bs-target="#userFavouritesCarousel"
+                                        data-bs-slide-to="@i"
+                                        class="@(i == 0 ? "active" : "")"
+                                        aria-label="Slide @(i + 1)"
+                                        aria-current="@(i == 0 ? "true" : null)">
+                                </button>
+                            }
+                        </div>
+
+                        <div class="carousel-inner">
+
+                            @for (int i = 0; i < Model.UserFavouriteGames.Count; i++)
+                            {
+                                GameListViewModel game = Model.UserFavouriteGames[i];
+
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <a asp-controller="Game" asp-action="Details" asp-route-id="@game.Id">
+                                        <img src="@(string.IsNullOrWhiteSpace(game.ImageUrl) ? "/images/placeholder.jpg" : game.ImageUrl)" class="d-block w-100 carousel-image" alt="@game.Name">
+
+                                    </a>
+
+                                </div>
+                            }
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#userFavouritesCarousel" data-bs-slide="prev">
+
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+
+                        </button>
+
+                        <button class="carousel-control-next" type="button" data-bs-target="#userFavouritesCarousel" data-bs-slide="next">
+
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+
+                        </button>
+                    </div>
+                }
+                else
+                {
+
+                        <div class="text-center">
+
+                            <p class="text-center">You haven't added any games to your list yet!</p>
+
+                            <a asp-controller="Game" asp-action="List" class="btn btn-primary"> Go find one now!</a>
+
+                        </div>
+                }
+
+            </div>
+            }
+            else
+            {
+
+                <div class="col-12 col-md-6 col-xl-4"> 
+                    <div class="carousel-heading d-flex align-items-center justify-content-center">
+
+                        <h2 class="text-center">If you register, you will also:</h2>
+
+                    </div>
+                    <h5 class="fst-normal">-See your own list of games here!</h5>
+                    <h5 class="">-Be able to browse through our genres!</h5>
+                    <h5 class="">-Add new genres and games!</h5>
+                    <h5 class="">-Have our eternal gratitude!</h5>
+                    
+                </div>
+
+
+            }
+      </div>
+  
+   </div>
+    
 </div>

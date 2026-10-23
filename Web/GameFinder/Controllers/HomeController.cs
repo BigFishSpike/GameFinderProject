@@ -1,19 +1,75 @@
 namespace GameFinder.Controllers
 {
+    using GameFinder.Services.DTOs;
+    using GameFinder.Services.Interfaces;
     using GameFinder.ViewModels;
+    using GameFinder.ViewModels.Game;
+    using GameFinder.ViewModels.Genre;
+    using GameFinder.ViewModels.Home;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Diagnostics;
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IGameService gameService;
+        private readonly IGenreService genreService;
+        private readonly IUserFavouriteService userFavouriteService;
+
+
+        public HomeController(IGameService gameService, IGenreService genreService, IUserFavouriteService userFavouriteService)
         {
-            return View();
+            this.gameService = gameService;
+            this.genreService = genreService;
+            this.userFavouriteService = userFavouriteService;
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            IEnumerable<GameDto> games = await gameService.GetGamesList(6);
+
+            HomeViewModel model = new HomeViewModel
+            {
+                FeaturedGames = games
+                    .Select(g => new GameListViewModel
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        ImageUrl = g.ImageUrl,
+                        GenreName = g.GenreName
+                    })
+                    .ToList()
+            }; 
+            
+            IEnumerable<GenreDto> genres = await genreService.GenresGetList();
+
+            model.FeaturedGenres = genres
+                .Select(g => new GenreListViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    ImageUrl = g.ImageUrl
+                })
+                .Take(5)
+                .ToList();
+
+            string? userId = GetUserId();
+
+            if (userId != null)
+            {
+                IEnumerable<GameDto> favourites = await userFavouriteService.GetUserFavouritesAsync(userId);
+
+                model.UserFavouriteGames = favourites
+                    .Select(g => new GameListViewModel
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        ImageUrl = g.ImageUrl,
+                        GenreName = g.GenreName
+                    })
+                    .ToList();
+            }
+
+            return View(model);
         }
     }
 }
