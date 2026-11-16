@@ -95,8 +95,6 @@
                 return LocalRedirect(returnUrl);
             }
 
-            await userFavouriteService.RemoveFavouriteAsync(userId, gameId);
-
             return RedirectToAction(nameof(List));
         }
     }

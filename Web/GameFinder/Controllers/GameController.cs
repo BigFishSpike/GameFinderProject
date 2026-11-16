@@ -106,8 +106,6 @@
         {
             GameSearchViewModel gameModel = new GameSearchViewModel();
 
-            IEnumerable<GenreDto> genres = await genreService.GenresGetList();
-
             gameModel.Genres = await GetGenres();
 
             return View(gameModel);
@@ -164,10 +162,7 @@
 
             }
 
-            IEnumerable<GenreDto> genreDtos = await genreService.GenresGetList();
-
             gameModel.Genres = await GetGenres();
-
 
             return View(gameModel);
         }
@@ -311,6 +306,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromRoute] int? id, GameEditViewModel model)
         {
             if (!id.HasValue || id.Value <= 0 || id.Value != model.Id)

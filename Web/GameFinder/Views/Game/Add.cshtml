@@ -76,7 +76,7 @@
         {
             <div class="form-check">
 
-                <input class="form-check-input" type="checkbox" name="SelectedDifficulties" value="@((int)difficulty)" id="difficulty-@difficulty" />
+                <input class="form-check-input" type="checkbox" name="Difficulties" value="@((int)difficulty)" id="difficulty-@difficulty" />
 
                 <label class="form-check-label" for="difficulty-@difficulty"> @difficulty </label>
 
@@ -93,7 +93,7 @@
         {
             <div class="form-check">
 
-                <input class="form-check-input" type="checkbox" name="SelectedMode" value="@((int)mode)" id="mode-@mode" />
+                <input class="form-check-input" type="checkbox" name="Modes" value="@((int)mode)" id="mode-@mode" />
 
                 <label class="form-check-label" for="mode-@mode"> @mode </label>
 
@@ -110,7 +110,7 @@
         {
             <div class="form-check">
 
-                <input class="form-check-input" type="checkbox" name="SelectedPlayerOption" value="@((int)playerOption)" id="player-option-@playerOption" />
+                <input class="form-check-input" type="checkbox" name="PlayerOptions" value="@((int)playerOption)" id="player-option-@playerOption" />
 
                 <label class="form-check-label" for="player-option-@playerOption"> @playerOption </label>
 
@@ -121,3 +121,6 @@
     <button type="submit" class="btn btn-primary">Add it!</button>
 
 </form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

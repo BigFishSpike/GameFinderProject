@@ -281,15 +281,6 @@
             {
                 await PopulateReplacementGenre(model);
 
-                foreach (var error in ModelState)
-                {
-                    foreach (var entry in error.Value.Errors)
-                    {
-                        Console.WriteLine(
-                            $"Field: {error.Key}, Error: {entry.ErrorMessage}");
-                    }
-                }
-
                 return View(model);
             }
 
