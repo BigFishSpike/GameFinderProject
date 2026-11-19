@@ -1,5 +1,6 @@
 ﻿namespace GameFinder.Controllers
 {
+    using static GameFinder.Common.Constants.ApplicationConstants;
     using GameFinder.Data.Models.Enums;
     using GameFinder.Services.DTOs;
     using GameFinder.Services.Interfaces;
@@ -8,7 +9,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using static GameFinder.Common.EntityValidation.ApplicationConstants;
 
     public class GameController : BaseController
     {

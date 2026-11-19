@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace GameFinder.Areas.Identity.Pages.Account;
 
 using static Common.EntityValidation.User;
+using static GameFinder.Common.Constants.Roles;
+
 public class RegisterModel : PageModel
 {
 
@@ -109,6 +111,27 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("User created a new account with password.");
 
+                IdentityResult roleResult = await _userManager.AddToRoleAsync(user, DefaultUser);
+
+                if (!roleResult.Succeeded)
+                {
+                    foreach (IdentityError error in roleResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                    IdentityResult deleteResult = await _userManager.DeleteAsync(user);
+
+                    if (!deleteResult.Succeeded)
+                    {
+                        string errors = string.Join("; ", deleteResult.Errors.Select(e => e.Description));
+
+                        throw new InvalidOperationException($"Failed to assign the User role and remove the newly created account. Errors: {errors}");
+                    }
+
+                    return Page();
+                }
+
                 if (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
                     return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -119,13 +142,12 @@ public class RegisterModel : PageModel
                     return LocalRedirect(returnUrl);
                 }
             }
-            foreach (var error in result.Errors)
+            foreach (IdentityError? error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
 
-        // If we got this far, something failed, redisplay form
         return Page();
     }
 

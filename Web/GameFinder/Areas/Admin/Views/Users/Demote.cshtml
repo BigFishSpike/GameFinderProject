@@ -1,0 +1,19 @@
+﻿@model AdminUserDemoteConfirmationViewModel
+
+@{
+    ViewData["Title"] = "Confirm Demotion";
+}
+
+<h1>Confirm Demotion</h1>
+
+<p> Are you sure you want to demote <strong>@Model.Email</strong> from Administrator to a regular User?</p>
+
+<form asp-area="Admin" asp-controller="Users" asp-action="Demote" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-danger"> Confirm </button>
+
+    <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="btn btn-secondary"> Cancel </a>
+
+</form>

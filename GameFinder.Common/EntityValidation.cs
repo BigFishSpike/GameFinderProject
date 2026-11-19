@@ -28,12 +28,6 @@
 
             public const int GenreImageUrlMaxLength = 2083;
         }
-        public static class ApplicationConstants
-        {
-            public const int EntitiesPerPage = 40;
 
-            public const string ApplicationDateFormat = "dd/MM/yyyy";
-
-        }
     }
 }

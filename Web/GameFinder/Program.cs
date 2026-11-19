@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GameFinder
 {
     using GameFinder.Data;
+    using GameFinder.Infrastructure.Identity;
     using GameFinder.Services;
     using GameFinder.Services.Interfaces;
     using Microsoft.AspNetCore.Identity;
@@ -10,7 +11,7 @@ namespace GameFinder
 
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,19 @@ namespace GameFinder
 
             WebApplication app = builder.Build();
 
+
+
+            using (IServiceScope scope = app.Services.CreateScope())
+            {
+                IServiceProvider services = scope.ServiceProvider;
+
+                RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+                UserManager<IdentityUser> userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+
+                await IdentitySeeder.SeedRolesAndAdminAsync(roleManager, userManager, builder.Configuration);
+            }
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -55,6 +69,12 @@ namespace GameFinder
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
+            app.MapAreaControllerRoute(
+                name: "admin",
+                areaName: "Admin",
+                pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
