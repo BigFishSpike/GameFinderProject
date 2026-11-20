@@ -81,7 +81,7 @@
 
             return genre.Id;
         }
-        public async Task<bool> GenreEdit(GenreEditDto genreDto, string userId)
+        public async Task<bool> GenreEdit(GenreEditDto genreDto, string userId, bool isAdmin)
         {
             Genre? genre = await dbContext.Genres.SingleOrDefaultAsync(g => g.Id == genreDto.Id);
 
@@ -90,7 +90,7 @@
                 return false;
             }
 
-            if (genre.CreatedByUserId != userId)
+            if (genre.CreatedByUserId != userId && !isAdmin)
             {
                 return false;
             }
@@ -111,7 +111,7 @@
             return true;
         }
 
-        public async Task<bool> GenreDelete(int id, string userId, int replacementGenreId)
+        public async Task<bool> GenreDelete(int id, string userId, int replacementGenreId, bool isAdmin)
         {
             Genre? genre = await dbContext.Genres
                 .Include(g => g.Games)
@@ -122,7 +122,7 @@
                 return false;
             }
 
-            if (genre.CreatedByUserId != userId)
+            if (genre.CreatedByUserId != userId && !isAdmin)
             {
                 return false;
             }

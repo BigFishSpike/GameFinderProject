@@ -10,8 +10,8 @@
 
         Task<int> GenreAdd(GenreAddDto genreDto);
 
-        Task<bool> GenreDelete(int id, string userId, int replacementGenreId);
-        
-        Task<bool> GenreEdit(GenreEditDto genreDto, string userId);
+        Task<bool> GenreEdit(GenreEditDto genreDto, string userId, bool isAdmin);
+
+        Task<bool> GenreDelete(int id, string userId, int replacementGenreId, bool isAdmin);
     }
 }

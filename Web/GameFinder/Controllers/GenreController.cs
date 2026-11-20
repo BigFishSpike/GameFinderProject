@@ -1,12 +1,12 @@
 ﻿namespace GameFinder.Controllers
 {
-    using GameFinder.Services.DTOs;
-    using GameFinder.Services.Interfaces;
-    using GameFinder.ViewModels.Game;
-    using GameFinder.ViewModels.Genre;
+    using Services.DTOs;
+    using Services.Interfaces;
+    using ViewModels.Game;
+    using ViewModels.Genre;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-
+    using static Common.Constants.Roles;
     public class GenreController : BaseController
     {
         private readonly IGenreService genreService;
@@ -157,7 +157,15 @@
 
             string? userId = GetUserId();
 
-            if (string.IsNullOrWhiteSpace(userId) || genre.CreatedByUserId != userId)
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return Challenge();
+            }
+
+            bool isAdmin = User.IsInRole(Administrator);
+            bool isOwner = genre.CreatedByUserId == userId;
+
+            if (!isOwner && !isAdmin)
             {
                 TempData["ErrorMessage"] = "You don't have permission to edit this genre.";
                 return RedirectToAction(nameof(List));
@@ -179,6 +187,7 @@
         public async Task<IActionResult> Edit(GenreEditViewModel model)
         {
             string? userId = GetUserId();
+            bool isAdmin = User.IsInRole(Administrator);
 
             if (string.IsNullOrWhiteSpace(userId))
             {
@@ -198,7 +207,7 @@
                 ImageUrl = model.ImageUrl
             };
 
-            bool edited = await genreService.GenreEdit(genreDto, userId);
+            bool edited = await genreService.GenreEdit(genreDto, userId, isAdmin);
 
             if (!edited)
             {
@@ -239,10 +248,12 @@
                 return Challenge();
             }
 
-            if (genre.CreatedByUserId != userId)
+            bool isAdmin = User.IsInRole(Administrator);
+            bool isOwner = genre.CreatedByUserId == userId;
+
+            if (!isOwner && !isAdmin)
             {
                 TempData["ErrorMessage"] = "Sorry, you don't have permission to delete this genre.";
-
                 return RedirectToAction(nameof(List));
             }
 
@@ -271,6 +282,7 @@
         public async Task<IActionResult> Delete(GenreDeleteViewModel model)
         {
             string? userId = GetUserId();
+            bool isAdmin = User.IsInRole(Administrator);
 
             if (string.IsNullOrWhiteSpace(userId))
             {
@@ -284,7 +296,7 @@
                 return View(model);
             }
 
-            bool deleted = await genreService.GenreDelete(model.Id, userId, model.ReplacementGenreId);
+            bool deleted = await genreService.GenreDelete(model.Id, userId, model.ReplacementGenreId, isAdmin);
 
             if (!deleted)
             {

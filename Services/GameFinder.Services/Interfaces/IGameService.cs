@@ -11,9 +11,9 @@ namespace GameFinder.Services.Interfaces
         Task<GameDetailsDto?> GetGameDetails(int id);
 
         Task<int> AddGame(GameAddDto gameDto);
+        
+        Task<bool> UpdateGame(GameUpdateDto gameDto, string userId, bool isAdmin);
 
-        Task<bool> UpdateGame(GameUpdateDto gameDto, string userId);
-
-        Task<bool> DeleteGame(int id, string userId);
+        Task<bool> DeleteGame(int id, string userId, bool isAdmin);
     }
 }

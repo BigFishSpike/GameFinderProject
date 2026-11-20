@@ -140,7 +140,7 @@
             return game.Id;
         }
 
-        public async Task<bool> UpdateGame(GameUpdateDto gameDto, string userId)
+        public async Task<bool> UpdateGame(GameUpdateDto gameDto, string userId, bool isAdmin)
         {
             Game? game = await dbContext.Games
                 .Include(g => g.Difficulties)
@@ -153,10 +153,11 @@
                 return false;
             }
 
-            if (game.CreatedByUserId != userId)
+            if (game.CreatedByUserId != userId && !isAdmin)
             {
                 return false;
             }
+
             game.Name = gameDto.Name;
             game.Description = gameDto.Description;
             game.ImageUrl = gameDto.ImageUrl;
@@ -198,7 +199,7 @@
             return true;
         }
 
-        public async Task<bool> DeleteGame(int id, string userId)
+        public async Task<bool> DeleteGame(int id, string userId, bool isAdmin)
         {
             Game? game = await dbContext.Games.SingleOrDefaultAsync(g => g.Id == id);
 
@@ -207,7 +208,7 @@
                 return false;
             }
 
-            if (game.CreatedByUserId != userId)
+            if (game.CreatedByUserId != userId && !isAdmin)
             {
                 return false;
             }

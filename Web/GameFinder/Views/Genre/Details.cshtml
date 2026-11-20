@@ -7,7 +7,7 @@
 <hr />
 <p class ="text-center">@Model.Description</p>
 
-@if (Model.IsOwner)
+@if (Model.IsOwner || User.IsInRole(Administrator))
 {
     <div class="d-flex gap-2 mb-3">
 

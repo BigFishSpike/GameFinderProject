@@ -1,14 +1,14 @@
 ﻿namespace GameFinder.Controllers
 {
-    using static GameFinder.Common.Constants.ApplicationConstants;
-    using GameFinder.Data.Models.Enums;
-    using GameFinder.Services.DTOs;
-    using GameFinder.Services.Interfaces;
-    using GameFinder.ViewModels.Game;
-    using GameFinder.ViewModels.Genre;
+    using static Common.Constants.ApplicationConstants;
+    using Data.Models.Enums;
+    using Services.DTOs;
+    using Services.Interfaces;
+    using ViewModels.Game;
+    using ViewModels.Genre;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
+    using static Common.Constants.Roles;
 
     public class GameController : BaseController
     {
@@ -271,7 +271,10 @@
                 return Challenge();
             }
 
-            if (game.CreatedByUserId != userId)
+            bool isAdmin = User.IsInRole(Administrator);
+            bool isOwner = game.CreatedByUserId == userId;
+
+            if (!isOwner && !isAdmin)
             {
                 TempData["ErrorMessage"] = "Sorry, you don't have permission to edit this game.";
 
@@ -367,15 +370,18 @@
                 ImageUrl = model.ImageUrl,
                 ReleaseDate = model.ReleaseDate,
                 GenreId = model.GenreId,
+
                 Difficulties = model.Difficulties
-                    .Select(difficulty => (Difficulty)difficulty)
-                    .ToList(),
+                .Select(difficulty => (Difficulty)difficulty)
+                .ToList(),
+
                 Modes = model.Modes
-                    .Select(mode => (Mode)mode)
-                    .ToList(),
+                .Select(mode => (Mode)mode)
+                .ToList(),
+
                 PlayerOptions = model.PlayerOptions
-                    .Select(playerOption => (PlayerOption)playerOption)
-                    .ToList()
+                .Select(playerOption => (PlayerOption)playerOption)
+                .ToList()
             };
 
             string? userId = GetUserId();
@@ -385,11 +391,14 @@
                 return Challenge();
             }
 
-            bool updated = await gameService.UpdateGame(updateGameDto, userId);
+            bool isAdmin = User.IsInRole(Administrator);
+
+            bool updated = await gameService.UpdateGame(updateGameDto, userId, isAdmin);
 
             if (!updated)
             {
-                TempData["ErrorMessage"] = "The game could not be found. Please try again.";
+                TempData["ErrorMessage"] ="The game could not be found, or you don't have permission to edit it.";
+
                 return RedirectToAction(nameof(List));
             }
 
@@ -420,7 +429,10 @@
                 return Challenge();
             }
 
-            if (game.CreatedByUserId != userId)
+            bool isAdmin = User.IsInRole(Administrator);
+            bool isOwner = game.CreatedByUserId == userId;
+
+            if (!isOwner && !isAdmin)
             {
                 TempData["ErrorMessage"] = "Sorry, you don't have permission to delete this game.";
                 return RedirectToAction(nameof(List));
@@ -432,6 +444,7 @@
                 Name = game.Name,
                 ImageUrl = game.ImageUrl,
             };
+
             return View(model);
         }
 
@@ -452,7 +465,9 @@
                 return Challenge();
             }
 
-            bool deleted = await gameService.DeleteGame(id, userId);
+            bool isAdmin = User.IsInRole(Administrator);
+
+            bool deleted = await gameService.DeleteGame(id, userId, isAdmin);
 
             if (!deleted)
             {
